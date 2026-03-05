@@ -7,6 +7,39 @@
   <title>erase friction — Custom Software, Automation & AI Solutions</title>
   <meta name="description"
     content="erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down." />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href="https://erasefriction.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://erasefriction.com/" />
+  <meta property="og:title" content="erase friction — Custom Software, Automation & AI Solutions" />
+  <meta property="og:description" content="erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down." />
+  <meta property="og:image" content="https://erasefriction.com/og-image.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="erase friction — Custom Software, Automation & AI Solutions" />
+  <meta name="twitter:description" content="erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down." />
+  <meta name="twitter:image" content="https://erasefriction.com/og-image.jpg" />
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "erase friction",
+    "url": "https://erasefriction.com",
+    "description": "erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down.",
+    "founder": [
+      { "@type": "Person", "name": "Brooks Conkle" },
+      { "@type": "Person", "name": "Tosin Alli" }
+    ],
+    "serviceType": ["Custom Software Development", "Workflow Automation", "AI Solutions"]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -120,6 +153,25 @@
     .btn-white:hover {
       background-color: var(--color-accent-tint);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    /* SKIP LINK */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--color-accent);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.875rem;
+      z-index: 999;
+      transition: top 0.15s ease;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
     }
 
     /* NAVBAR */
@@ -742,9 +794,11 @@
 
 <body>
 
+  <a href="#problem" class="skip-link">Skip to main content</a>
+
   <header class="navbar">
     <nav class="nav-inner">
-      <a href="#" class="nav-logo"><span class="logo-erase">erase</span> <span class="logo-friction">friction</span></a>
+      <a href="/" class="nav-logo"><span class="logo-erase">erase</span> <span class="logo-friction">friction</span></a>
       <div class="nav-links">
         <a href="#problem">The Problem</a>
         <a href="#services">Services</a>
@@ -912,17 +966,17 @@
           executing around the clock while your team focuses on what actually requires a human.</p>
         <div class="team-grid">
           <div class="team-member">
-            <img src="Brooks.png" alt="Brooks Conkle" class="team-photo" />
+            <img src="Brooks.png" alt="Brooks Conkle" class="team-photo" loading="lazy" />
             <div class="team-member-name">Brooks Conkle</div>
             <div class="team-member-title">Operations &amp; Strategy</div>
           </div>
           <div class="team-member">
-            <img src="Tosin.png" alt="Tosin Alli" class="team-photo" />
+            <img src="Tosin.png" alt="Tosin Alli" class="team-photo" loading="lazy" />
             <div class="team-member-name">Tosin Alli</div>
             <div class="team-member-title">Engineering &amp; AI</div>
           </div>
           <div class="team-member">
-            <img src="Kea.png" alt="Kea" class="team-photo" />
+            <img src="Kea.png" alt="Kea" class="team-photo" loading="lazy" />
             <div class="team-member-name">Kea</div>
             <div class="team-member-title">He's always on. Never calls in sick.</div>
           </div>

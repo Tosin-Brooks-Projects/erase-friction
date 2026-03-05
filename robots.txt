@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://erasefriction.com/sitemap.xml
