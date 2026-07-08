@@ -223,6 +223,6 @@ N/A — no backend API. All form handling is via Netlify Forms.
 ---
 
 ## 🔗 Key Links
-- **GitHub Repo:** https://github.com/conklbm/erase-friction
+- **GitHub Repo:** https://github.com/Tosin-Brooks-Projects/erase-friction
 - **Netlify Dashboard:**
 - **Live Site:** https://erasefriction.com
