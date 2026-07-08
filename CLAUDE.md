@@ -164,6 +164,23 @@ Before pushing to production:
 
 ---
 
+## 📨 Contact Form (Netlify Forms)
+The contact form (`name="contact"`) is a **Netlify Form**. Submissions are captured server-side by Netlify and stored in the dashboard (Site → **Forms** → "contact"). There is **no backend and no email address in the code** — leads only email you if a notification is configured in Netlify.
+
+**Email notifications setup:** Site configuration → **Forms → Form notifications → Add notification → Email notification**. Without this, leads pile up silently in the dashboard.
+
+**AJAX submission format:** the JS posts **URL-encoded** (`application/x-www-form-urlencoded` via `URLSearchParams`), NOT multipart `FormData`. This is Netlify's recommended pattern for JS-submitted forms — multipart AJAX submissions can silently fail to register. Keep it URL-encoded unless a file-upload field is added.
+
+**Gotchas when "notifications aren't arriving":**
+- **Test on production only.** Form submissions only register on the live deployed site (erasefriction.com). `localhost` and `file://` do NOT submit to Netlify — nothing will appear in the dashboard.
+- **Diagnostic fork:** first check whether the submission appears in the dashboard at all. Not there → capture problem (form detection, AJAX format, or testing on non-prod). There but no email → notification-config/delivery problem.
+- **Check the Spam tab.** Akismet-flagged submissions land under Forms → Spam and **never trigger notifications**.
+- **Check email spam/promotions folder** for mail from `forms@netlify.com`.
+- **Confirm form detection** — Netlify → Forms must list "contact" as an active form (detected at build from the static HTML). If missing, it was never detected.
+- The submit handler shows the success message only on an actual `res.ok`; on failure it tells the visitor to email brooks.fastsolutions@gmail.com directly.
+
+---
+
 ## 🌍 Environment Strategy
 - Two environments: `development` (local) → `production` (Netlify on `main`)
 - Netlify automatically deploys preview URLs for pull requests — use these to review changes before merging
@@ -198,6 +215,10 @@ N/A — no backend API. All form handling is via Netlify Forms.
 |------|----------|--------|
 | 2026-03-05 | Keep as static HTML/CSS/JS, no framework | It's a single landing page — no need for React overhead. Faster, simpler, easier to maintain. |
 | 2026-03-05 | Host on Netlify, use Netlify Forms | Simplest deployment path for a static site; Netlify Forms handles contact submissions without a backend. |
+| 2026-03-05 | No .env.local needed for this project | Static site with no API keys or secrets. Skip automated code/security reviews; changes are low-risk HTML/CSS. |
+| 2026-03-05 | No hamburger menu | Single short page — CTA always visible on mobile. Scroll is sufficient; hamburger adds complexity for no real gain. |
+| 2026-03-05 | SVG favicon (ef with red X) | Brand-consistent, no .ico needed, supported by all modern browsers. |
+| 2026-07-08 | Contact form posts URL-encoded, not multipart FormData | Netlify's recommended AJAX format; multipart submissions can silently fail to register (→ no notification). See Contact Form section. |
 
 ---
 

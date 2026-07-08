@@ -437,6 +437,23 @@
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid var(--color-accent-light);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .team-member a {
+      display: block;
+      border-radius: 50%;
+    }
+
+    .team-member a:hover .team-photo,
+    .team-member a:focus-visible .team-photo {
+      transform: translateY(-3px);
+      border-color: var(--color-accent);
+      box-shadow: 0 6px 16px rgba(13, 148, 136, 0.25);
+    }
+
+    .team-member a:focus-visible {
+      outline: none;
     }
 
     .team-agent-icon {
@@ -814,8 +831,7 @@
     <div class="container">
       <h1 class="hero-headline">Your team is doing work<br />a machine should do.</h1>
       <p class="hero-sub">
-        We find the repetitive, manual tasks burning your team's hours &mdash; and build
-        custom software to kill them.<br /><em>No subscriptions. No bloat. Just the exact tool you need.</em>
+        We help you use AI in your business to 2x your team's output so you can focus on the meaningful work.<br /><em>No subscriptions. Just the exact tool you need.</em>
       </p>
       <div class="hero-cta-group">
         <a href="#contact" class="btn btn-primary btn-lg">Tell us your bottleneck &rarr;</a>
@@ -966,7 +982,9 @@
           executing around the clock while your team focuses on what actually requires a human.</p>
         <div class="team-grid">
           <div class="team-member">
-            <img src="Brooks.png" alt="Brooks Conkle" class="team-photo" loading="lazy" />
+            <a href="https://www.linkedin.com/in/brooksconkle/" target="_blank" rel="noopener noreferrer" aria-label="Brooks Conkle on LinkedIn">
+              <img src="Brooks.png" alt="Brooks Conkle" class="team-photo" loading="lazy" />
+            </a>
             <div class="team-member-name">Brooks Conkle</div>
             <div class="team-member-title">Operations &amp; Strategy</div>
           </div>
@@ -1050,9 +1068,18 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const data = new FormData(form);
-        await fetch('/', { method: 'POST', body: data });
-        form.style.display = 'none';
-        success.style.display = 'block';
+        try {
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data).toString()
+          });
+          if (!res.ok) throw new Error('Submission failed: ' + res.status);
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } catch (err) {
+          alert("Something went wrong sending your message. Please email us directly at brooks.fastsolutions@gmail.com.");
+        }
       });
     }
   </script>
