@@ -34,12 +34,29 @@ This file gives Claude Code full context on how this project should be built, ma
 ## 📁 Project Structure
 ```
 /
-├── index.html         # entire site — all HTML, CSS, and JS inline
-├── Brooks.png         # team photo
-├── Tosin.png          # team photo
-├── Kea.png            # team photo (AI agent mascot)
+├── index.html                 # entire landing page — all HTML, CSS, and JS inline
+├── privacy.html               # privacy policy (self-contained styles)
+├── terms.html                 # terms of service (self-contained styles)
+├── netlify.toml               # security headers + asset caching
+├── favicon.svg
+├── robots.txt
+├── sitemap.xml
+├── OG-image.jpg               # social share preview
+├── Brooks.webp                # team photo (220px, served)
+├── Tosin.webp                 # team photo (220px, served)
+├── Kea.webp                   # team photo (220px, served — AI agent mascot)
+├── Brooks.png / Tosin.png / Kea.png   # 800px originals, kept as sources only
+├── logo.png                   # wordmark
+├── logo-domain.svg / .png     # wordmark + .com, for banners and cards
+├── logo-domain-on-dark.svg / .png     # same, for dark backgrounds
+├── scripts/
+│   ├── form-to-sheet.gs       # Apps Script — Netlify webhook → Google Sheet
+│   └── README.md              # setup + troubleshooting for the above
 └── CLAUDE.md
 ```
+
+The three `.png` team photos are **sources, not assets** — `index.html` references the
+`.webp` versions. Re-export the WebP at 220×220 if a photo ever changes.
 
 ---
 
@@ -169,6 +186,8 @@ The contact form (`name="contact"`) is a **Netlify Form**. Submissions are captu
 
 **Email notifications setup:** Site configuration → **Forms → Form notifications → Add notification → Email notification**. Without this, leads pile up silently in the dashboard.
 
+**Google Sheet mirror:** an outgoing webhook on the same screen forwards each submission to a Google Apps Script Web App, which appends a row to a Sheet. Setup and troubleshooting live in [`scripts/README.md`](scripts/README.md). Changing a form field name in `index.html` means updating `COLUMNS` in `scripts/form-to-sheet.gs`, or the new field is silently dropped.
+
 **AJAX submission format:** the JS posts **URL-encoded** (`application/x-www-form-urlencoded` via `URLSearchParams`), NOT multipart `FormData`. This is Netlify's recommended pattern for JS-submitted forms — multipart AJAX submissions can silently fail to register. Keep it URL-encoded unless a file-upload field is added.
 
 **Gotchas when "notifications aren't arriving":**
@@ -219,6 +238,10 @@ N/A — no backend API. All form handling is via Netlify Forms.
 | 2026-03-05 | No hamburger menu | Single short page — CTA always visible on mobile. Scroll is sufficient; hamburger adds complexity for no real gain. |
 | 2026-03-05 | SVG favicon (ef with red X) | Brand-consistent, no .ico needed, supported by all modern browsers. |
 | 2026-07-08 | Contact form posts URL-encoded, not multipart FormData | Netlify's recommended AJAX format; multipart submissions can silently fail to register (→ no notification). See Contact Form section. |
+| 2026-07-23 | Leads mirrored to a Google Sheet via Netlify outgoing webhook → Apps Script | Netlify's free tier caps form submissions at 100/month and is the only copy of every lead. Server-side webhook keeps the endpoint out of client code, and Akismet filters before forwarding. See `scripts/README.md`. |
+| 2026-07-23 | Buttons use `--color-accent-hover` (#0f766e), not `--color-accent` | White on #0d9488 is 3.74:1 — fails WCAG AA. #0f766e gives 5.47:1. The brand teal is still used for graphics, borders, and the strikethrough, where 3:1 is fine. |
+| 2026-07-23 | Added privacy.html + terms.html as separate pages | Legal text is long and versioned; inlining it in index.html would bury the landing page. These are the exception to the single-file rule. |
+| 2026-07-23 | Grid children in `.contact-inner` need `min-width: 0` | Grid items default to `min-width: auto`, so the timeline `<select>` and the submit button forced ~29px of horizontal scroll at 375px. Watch for this whenever a form control goes inside a grid. |
 
 ---
 
