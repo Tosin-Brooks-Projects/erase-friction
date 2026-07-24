@@ -25,22 +25,39 @@ are created automatically on first submission — you don't make them by hand.
 All forms share **one** deployment, **one** URL, and **one** secret. Routing is by
 the form's name, which Netlify includes in every webhook payload.
 
-## The checklist email
+## The checklist email (Resend)
 
-When a `checklist` submission arrives, the script emails the AI Automation Checklist
-from the Gmail account running it. The visitor is sent to `/thank-you`, which tells
-them to check their inbox.
+When a `checklist` submission arrives, the script emails the Money-Leak Checklist via
+**Resend**, from `Brooks at erase friction <brooks@erasefriction.com>` (the domain is
+verified in Resend, so SPF/DKIM pass). The PDF is attached *and* linked; if the
+attachment fetch fails the email still goes out link-only. The visitor meanwhile lands
+on `/thank-you`, which shows the checklist immediately.
 
-**The asset** is `ai-automation-checklist.pdf` at the site root, so `CHECKLIST_URL`
-already points at it — live once the branch is merged and deployed. To swap in a new
-checklist, replace that PDF (keep the filename) or update `CHECKLIST_URL`.
-`CHECKLIST_SUBJECT` and `CHECKLIST_FROM_NAME` sit next to it.
+**The asset** is `ai-automation-checklist.pdf` at the site root (`CHECKLIST_URL`). To
+swap in a new checklist, replace that PDF (keep the filename). Subject and from/reply
+addresses are constants next to it in `form-to-sheet.gs`.
 
-The email uses `MailApp`, so the only added permission is send-only. It sends from the
-script owner's address. Gmail caps consumer accounts at ~100 recipients/day and Workspace
-at ~1,500 — fine for a lead magnet, but if this list ever gets large, move sending to a
-real email service. Email delivery is wrapped in its own try/catch: if a send fails, the
-lead is still logged, and the failure is recorded in Apps Script → Executions.
+Resend's free tier is 3,000 emails/month (100/day) — plenty for a lead magnet. Email
+delivery is wrapped in its own try/catch: if a send fails, the lead is still logged and
+the failure appears in Apps Script → **Executions** (a non-2xx Resend response is
+thrown with its body, so the reason is visible there).
+
+Note: Resend only *sends*. `brooks@erasefriction.com` must also be able to *receive*
+mail (Workspace mailbox or a forwarding rule) for replies and the site's mailto links.
+
+## Secrets — Script Properties, not code
+
+Both secrets live in the Apps Script project under **Project Settings (⚙️) → Script
+Properties** — never in the code, so re-pasting `form-to-sheet.gs` doesn't wipe them
+and nothing sensitive is in this repo:
+
+| Property | Value |
+|---|---|
+| `SHARED_SECRET` | the same random string as `?token=` in the Netlify webhook URL |
+| `RESEND_API_KEY` | a Resend API key with sending access |
+
+If either is missing, the script throws a "Missing Script Property" error that names
+the property — check Executions.
 
 ## Setup
 
@@ -54,26 +71,33 @@ empty — the script names and fills the tabs itself. You can delete the default
 
 Extensions → Apps Script. Delete the placeholder, paste in [`form-to-sheet.gs`](form-to-sheet.gs), save.
 
-**3. Set the shared secret**
+**3. Add the two Script Properties**
 
-Replace `CHANGE_ME_TO_A_RANDOM_STRING` at the top with any random string. Generate one:
+Project Settings (⚙️) → **Script Properties** → Add script property:
+
+- `SHARED_SECRET` — any random string. Generate one:
 
 ```powershell
 [guid]::NewGuid().ToString('N')
 ```
 
-(On macOS/Linux, `openssl rand -hex 16` does the same. `openssl` isn't on Windows by default — use the PowerShell line above.)
+(On macOS/Linux, `openssl rand -hex 16` does the same.) The identical string goes in
+the Netlify webhook URL as `?token=`.
 
-Keep it out of git — it lives only in the Apps Script project and the Netlify webhook URL.
+- `RESEND_API_KEY` — from the Resend dashboard (API Keys → Create, sending access).
+  Paste it straight into the property — never into code, chat, or git.
 
 **4. Verify the writes**
 
 In the Apps Script editor pick `testAppend` from the function dropdown and Run.
-Approve the permission prompt. It writes one test row to **Contact Leads** and one to
-**Checklist Signups** — no email is sent. Confirm both tabs appear, then delete the test rows.
+Approve the permission prompt — after switching to Resend it includes "connect to an
+external service" (that's `UrlFetchApp` calling the Resend API). `testAppend` writes
+one test row to **Contact Leads** and one to **Checklist Signups** — no email is sent.
+Confirm both tabs appear, then delete the test rows.
 
 To preview the checklist email, set `TEST_EMAIL` in `testChecklistEmail` to your own
-address and run that function. It sends one real email to you.
+address and run that function. It sends one real email to you via Resend — check that
+the From is `brooks@erasefriction.com` and the PDF is attached.
 
 **5. Deploy as a Web App**
 

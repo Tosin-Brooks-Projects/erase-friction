@@ -1,31 +1,33 @@
 /**
- * erase friction — Netlify forms → Google Sheet (one tab per form)
+ * erase friction — Netlify forms → Google Sheet (one tab per form) + Resend delivery
  *
- * Receives Netlify form submissions via an outgoing webhook and appends one row
- * to the tab that matches the form. Deployed as an Apps Script Web App; Netlify
+ * Receives Netlify form submissions via an outgoing webhook, appends one row to the
+ * tab that matches the form, and (for the checklist form) emails the checklist via
+ * Resend from brooks@erasefriction.com. Deployed as an Apps Script Web App; Netlify
  * calls it server-side, so the URL never appears in the site's client code.
  *
  * Adding a form later = add one entry to FORMS below. No other changes.
  *
+ * SECRETS live in Script Properties (Project Settings ⚙️ → Script Properties), NOT
+ * in this file — so re-pasting the code never wipes them, and nothing sensitive
+ * sits in the repo. Required properties:
+ *   SHARED_SECRET    — the same random string as ?token= in the Netlify webhook URL
+ *   RESEND_API_KEY   — a Resend API key with sending access
+ *
  * SETUP — see scripts/README.md for the full walkthrough.
- *   1. Create ONE Google Sheet, Extensions → Apps Script, paste this in.
- *   2. Set SHARED_SECRET below to a random string you generate.
- *   3. Deploy → New deployment → Web app → Execute as "Me", access "Anyone".
- *   4. For EACH form: Netlify → Forms → Form notifications → Outgoing webhook →
- *      URL: <web-app-url>?token=<SHARED_SECRET>   Event: New form submission
  */
 
-// Any random string. Netlify passes it back as ?token= so random bots can't write.
-var SHARED_SECRET = 'CHANGE_ME_TO_A_RANDOM_STRING';
+function getSecret_(name) {
+  var v = PropertiesService.getScriptProperties().getProperty(name);
+  if (!v) throw new Error('Missing Script Property: ' + name + ' — add it under Project Settings → Script Properties.');
+  return v;
+}
 
 // --- Checklist lead magnet: the email sent to everyone who opts in. ---
-// The PDF lives at the site root (ai-automation-checklist.pdf), so this URL is live
-// once the branch is merged to main and deployed.
 var CHECKLIST_URL = 'https://erasefriction.com/ai-automation-checklist.pdf';
 var CHECKLIST_SUBJECT = 'Your Money-Leak Checklist';
-var CHECKLIST_FROM_NAME = 'Brooks at erase friction';
-// MailApp always sends FROM the Gmail account running this script; replyTo routes
-// the visitor's reply to the business address instead.
+// Domain is verified in Resend, so mail genuinely comes from erasefriction.com.
+var CHECKLIST_FROM = 'Brooks at erase friction <brooks@erasefriction.com>';
 var CHECKLIST_REPLY_TO = 'brooks@erasefriction.com';
 
 /**
@@ -70,7 +72,7 @@ var FALLBACK_TAB = 'Unrouted';
 
 function doPost(e) {
   try {
-    if (!e || !e.parameter || e.parameter.token !== SHARED_SECRET) {
+    if (!e || !e.parameter || e.parameter.token !== getSecret_('SHARED_SECRET')) {
       return respond(403, { error: 'forbidden' });
     }
     if (!e.postData || !e.postData.contents) {
@@ -191,16 +193,16 @@ function appendRaw(tabName, formName, sub, data) {
   }
 }
 
-// Emails the checklist link from the account running the script (your Gmail).
-// MailApp keeps the OAuth scope to send-only; GmailApp would add read/modify access
-// this doesn't need.
+// Emails the checklist via Resend, from the verified erasefriction.com domain.
+// The PDF is attached AND linked; if fetching it fails, the email still goes out
+// link-only rather than not at all.
 function sendChecklist(email, name) {
   var firstName = (name || '').trim().split(/\s+/)[0];
   var greeting = firstName ? 'Hi ' + firstName + ',' : 'Hi,';
   var htmlBody =
     '<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a;max-width:520px">' +
     '<p>' + escapeHtml(greeting) + '</p>' +
-    '<p>Thanks for grabbing the Money-Leak Checklist. Here it is:</p>' +
+    '<p>Thanks for grabbing the Money-Leak Checklist. It\'s attached, and this link always works too:</p>' +
     '<p><a href="' + CHECKLIST_URL + '" style="display:inline-block;background:#0f766e;color:#fff;' +
     'text-decoration:none;font-weight:600;padding:12px 22px;border-radius:8px">Open the checklist &rarr;</a></p>' +
     '<p>Work through it on your own team, and if a bottleneck jumps out, just reply to this email — ' +
@@ -208,18 +210,40 @@ function sendChecklist(email, name) {
     '<p>&mdash; Brooks<br>erase friction</p>' +
     '</div>';
   var plainBody =
-    greeting + '\n\nThanks for grabbing the Money-Leak Checklist. Here it is:\n' +
+    greeting + '\n\nThanks for grabbing the Money-Leak Checklist. It\'s attached, and this link always works too:\n' +
     CHECKLIST_URL + '\n\nWork through it on your own team, and if a bottleneck jumps out, ' +
     'just reply to this email.\n\n— Brooks\nerase friction';
 
-  MailApp.sendEmail({
-    to: email,
+  var payload = {
+    from: CHECKLIST_FROM,
+    to: [email],
+    reply_to: CHECKLIST_REPLY_TO,
     subject: CHECKLIST_SUBJECT,
-    name: CHECKLIST_FROM_NAME,
-    replyTo: CHECKLIST_REPLY_TO,
-    htmlBody: htmlBody,
-    body: plainBody
+    html: htmlBody,
+    text: plainBody
+  };
+
+  try {
+    var pdf = UrlFetchApp.fetch(CHECKLIST_URL);
+    payload.attachments = [{
+      filename: 'Money-Leak-Checklist.pdf',
+      content: Utilities.base64Encode(pdf.getBlob().getBytes())
+    }];
+  } catch (fetchErr) {
+    console.error('PDF fetch failed, sending link-only: ' + fetchErr);
+  }
+
+  var res = UrlFetchApp.fetch('https://api.resend.com/emails', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { Authorization: 'Bearer ' + getSecret_('RESEND_API_KEY') },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
   });
+  var code = res.getResponseCode();
+  if (code < 200 || code >= 300) {
+    throw new Error('Resend ' + code + ': ' + res.getContentText());
+  }
 }
 
 function escapeHtml(s) {
