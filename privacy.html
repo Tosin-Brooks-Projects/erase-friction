@@ -13,6 +13,15 @@
   <link rel="canonical" href="https://erasefriction.com/privacy" />
   <meta name="robots" content="index, follow" />
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6HBH3FB5B"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-V6HBH3FB5B');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
@@ -148,9 +157,12 @@
     <p>Our host records standard server logs (IP address, browser type, pages requested, timestamps) as part of serving
       and protecting the site. Your IP address is also stored alongside your form submission for spam prevention.</p>
 
-    <h3>Cookies</h3>
-    <p>We set no cookies and run no analytics or advertising trackers. Third parties listed below may set their own —
-      see their policies.</p>
+    <h3>Cookies &amp; analytics</h3>
+    <p>We use Google Analytics to see which pages are visited and whether our forms get used. It sets cookies (such as
+      <code>_ga</code>) to tell visitors apart and collects usage data like pages viewed, device type, and approximate
+      location. We use it for site statistics only — no advertising features, no remarketing, and we don't send it your
+      name or email. You can block analytics cookies with your browser settings or an ad blocker; the site works fine
+      without them.</p>
 
     <h2>Why we use it</h2>
     <ul>
@@ -186,7 +198,7 @@
           <tr>
             <td>Google</td>
             <td>Fonts served to your browser; Google Sheets and Apps Script store form submissions (contact and
-              checklist) and send the checklist email</td>
+              checklist) and send the checklist email; Google Analytics collects site-usage statistics</td>
             <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy policy</a></td>
           </tr>
         </tbody>

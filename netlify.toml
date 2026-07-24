@@ -9,9 +9,12 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
-    # Google Fonts is the only third party. 'unsafe-inline' is required because all
-    # CSS and JS live inline in index.html — drop it if that ever changes.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    # Third parties: Google Fonts + Google Analytics (gtag). 'unsafe-inline' is
+    # required because all CSS and JS live inline — drop it if that ever changes.
+    # GA needs script-src (loader), connect-src (event beacons, incl. regional
+    # endpoints via wildcard), and img-src (pixel fallback) — without connect-src
+    # entries GA fails silently.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
 
 # The checklist PDF must stay publicly fetchable (the delivery email links to it),
 # but noindex keeps search engines from handing it out and bypassing the email gate.

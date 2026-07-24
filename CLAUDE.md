@@ -181,6 +181,13 @@ Before pushing to production:
 - Set up **uptime monitoring** via UptimeRobot (free tier) pointing at erasefriction.com
 - Monitor Netlify form submissions — check the Netlify dashboard regularly for new leads
 
+## 📊 Analytics (GA4)
+- **Property:** `G-V6HBH3FB5B`. The gtag snippet is in the `<head>` of all four pages (index, thank-you, privacy, terms).
+- **Events:** `generate_lead` fires on successful submit of either form, distinguished by the `form_name` param (`contact` | `checklist`). `form_error` fires on a failed submit, same param. The checklist event uses beacon transport + an `event_callback`/400ms-timeout redirect so tracking never blocks or is lost to the `/thank-you` navigation — keep that pattern if the handler changes.
+- **CSP:** GA required `script-src` (googletagmanager.com), `connect-src` (google-analytics wildcards incl. regional endpoints), and `img-src` additions in `netlify.toml`. If GA ever stops reporting, check the CSP first — it fails silently.
+- **In the GA4 UI:** mark `generate_lead` as a key event (Admin → Events) once it first appears, so form fills count as conversions.
+- Privacy policy discloses GA (cookies section + processor table). **No ads/remarketing features are enabled — if that ever changes, the privacy policy and the cookie-banner decision must be revisited.**
+
 ---
 
 ## 📨 Forms (Netlify Forms)

@@ -40,6 +40,15 @@
   }
   </script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6HBH3FB5B"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-V6HBH3FB5B');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -1298,11 +1307,13 @@
           if (!res.ok) throw new Error('Submission failed: ' + res.status);
           form.style.display = 'none';
           success.style.display = 'block';
+          if (typeof gtag === 'function') gtag('event', 'generate_lead', { form_name: 'contact' });
         } catch (err) {
           // Re-enable so a network blip doesn't strand the visitor on a dead button.
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalLabel;
           contactError.hidden = false;
+          if (typeof gtag === 'function') gtag('event', 'form_error', { form_name: 'contact' });
         }
       });
     }
@@ -1329,11 +1340,24 @@
             body: new URLSearchParams(data).toString()
           });
           if (!res.ok) throw new Error('Submission failed: ' + res.status);
-          window.location.href = '/thank-you';
+          // Fire the lead event, then redirect. Beacon survives the navigation; the
+          // timeout guarantees the redirect even if gtag is blocked by an ad blocker.
+          const goThanks = () => { window.location.href = '/thank-you'; };
+          if (typeof gtag === 'function') {
+            gtag('event', 'generate_lead', {
+              form_name: 'checklist',
+              transport_type: 'beacon',
+              event_callback: goThanks
+            });
+            setTimeout(goThanks, 400);
+          } else {
+            goThanks();
+          }
         } catch (err) {
           clBtn.disabled = false;
           clBtn.innerHTML = clLabel;
           clError.hidden = false;
+          if (typeof gtag === 'function') gtag('event', 'form_error', { form_name: 'checklist' });
         }
       });
     }
