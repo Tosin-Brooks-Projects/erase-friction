@@ -650,6 +650,88 @@
       color: #9ca3af;
     }
 
+    /* CHECKLIST LEAD MAGNET */
+    .checklist {
+      padding: 4.5rem 0;
+      background: var(--color-accent-tint);
+      border-top: 1px solid var(--color-accent-light);
+      border-bottom: 1px solid var(--color-accent-light);
+    }
+
+    .checklist-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .checklist-inner h2 {
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.75rem;
+    }
+
+    .checklist-inner p {
+      font-size: 1.0625rem;
+      color: var(--color-muted);
+      margin-bottom: 1.75rem;
+      line-height: 1.6;
+    }
+
+    .checklist-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .checklist-form .field {
+      flex: 1 1 180px;
+      min-width: 0;
+    }
+
+    .checklist-form label {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+
+    .checklist-form input {
+      width: 100%;
+      font-family: var(--font-base);
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 1rem;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .checklist-form input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+    }
+
+    .checklist-form .btn {
+      flex: 0 0 auto;
+    }
+
+    .checklist-note {
+      margin-top: 1rem;
+      font-size: 0.8125rem;
+      color: var(--color-muted);
+    }
+
+    /* Honeypot — hidden from real users, catches bots. */
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+    }
+
     /* CONTACT FORM */
     .contact {
       padding: 6rem 0;
@@ -1053,6 +1135,32 @@
     </div>
   </section>
 
+  <section class="checklist" id="checklist">
+    <div class="container">
+      <div class="checklist-inner">
+        <h2>Not ready to talk? Start here.</h2>
+        <p>Get our free Money-Leak Checklist &mdash; the 5 places your business is quietly losing money, and the AI fix for each. We'll email you a copy.</p>
+        <form class="checklist-form" id="checklist-form" name="checklist" method="POST" action="/thank-you"
+          data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="checklist" />
+          <p class="hp-field" aria-hidden="true">
+            <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+          <div class="field">
+            <label for="cl-name">Your name</label>
+            <input type="text" id="cl-name" name="name" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="cl-email">Email address</label>
+            <input type="email" id="cl-email" name="email" placeholder="you@company.com" autocomplete="email" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Email me the checklist &rarr;</button>
+        </form>
+        <p class="checklist-note">No spam. Unsubscribe anytime. We never share your email.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="contact" id="contact">
     <div class="container">
       <div class="contact-inner">
@@ -1148,6 +1256,35 @@
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalLabel;
           alert("Something went wrong sending your message. Please email us directly at brooks.fastsolutions@gmail.com.");
+        }
+      });
+    }
+
+    // Checklist lead magnet — same AJAX capture, but send to a thank-you page on success.
+    const checklistForm = document.getElementById('checklist-form');
+    if (checklistForm) {
+      const clBtn = checklistForm.querySelector('button[type="submit"]');
+      checklistForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (clBtn.disabled) return;
+
+        const clLabel = clBtn.innerHTML;
+        clBtn.disabled = true;
+        clBtn.textContent = 'Sending…';
+
+        const data = new FormData(checklistForm);
+        try {
+          const res = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data).toString()
+          });
+          if (!res.ok) throw new Error('Submission failed: ' + res.status);
+          window.location.href = '/thank-you';
+        } catch (err) {
+          clBtn.disabled = false;
+          clBtn.innerHTML = clLabel;
+          alert("Something went wrong. Please email us at brooks.fastsolutions@gmail.com and we'll send the checklist over.");
         }
       });
     }
