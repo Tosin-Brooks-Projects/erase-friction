@@ -56,11 +56,13 @@ Extensions → Apps Script. Delete the placeholder, paste in [`form-to-sheet.gs`
 
 **3. Set the shared secret**
 
-Replace `CHANGE_ME_TO_A_RANDOM_STRING` at the top with a random string. Generate one:
+Replace `CHANGE_ME_TO_A_RANDOM_STRING` at the top with any random string. Generate one:
 
-```bash
-openssl rand -hex 16
+```powershell
+[guid]::NewGuid().ToString('N')
 ```
+
+(On macOS/Linux, `openssl rand -hex 16` does the same. `openssl` isn't on Windows by default — use the PowerShell line above.)
 
 Keep it out of git — it lives only in the Apps Script project and the Netlify webhook URL.
 
