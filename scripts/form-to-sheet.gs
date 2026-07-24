@@ -81,6 +81,14 @@ function doPost(e) {
     var data = sub.data || {};
     var formName = sub.form_name || sub.form || '';
 
+    // Idempotency. Netlify re-delivers a webhook if this endpoint is slow to answer
+    // (the email send below adds a few seconds), so the same submission can arrive
+    // twice. Process each submission id once; a retry becomes a no-op. Distinct
+    // submissions have distinct ids, so real leads are never merged.
+    if (isDuplicate(sub.id)) {
+      return respond(200, { ok: true, duplicate: true });
+    }
+
     var config = FORMS[formName];
     if (!config) {
       // Unknown form — record everything we got so no lead is ever lost.
@@ -114,6 +122,25 @@ function doPost(e) {
     // Surface failures in Apps Script → Executions rather than silently dropping a lead.
     console.error('form-to-sheet failed: ' + err + ' | body: ' + (e && e.postData ? e.postData.contents : 'none'));
     return respond(500, { error: String(err) });
+  }
+}
+
+// Returns true if this submission id has been seen before (and records it if not).
+// Locked so two near-simultaneous retries can't both pass the check. Cache TTL is
+// 6h — far longer than Netlify's retry window — after which the id can be reused
+// harmlessly. No id (shouldn't happen for Netlify) => can't dedupe, so treat as new.
+function isDuplicate(subId) {
+  if (!subId) return false;
+  var lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    var cache = CacheService.getScriptCache();
+    var key = 'sub_' + subId;
+    if (cache.get(key)) return true;
+    cache.put(key, '1', 21600);
+    return false;
+  } finally {
+    lock.releaseLock();
   }
 }
 
