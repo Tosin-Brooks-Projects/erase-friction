@@ -202,7 +202,9 @@ There is **no backend and no email address in the code** — leads only email yo
 - **Check the Spam tab.** Akismet-flagged submissions land under Forms → Spam and **never trigger notifications**.
 - **Check email spam/promotions folder** for mail from `forms@netlify.com`.
 - **Confirm form detection** — Netlify → Forms must list "contact" as an active form (detected at build from the static HTML). If missing, it was never detected.
-- The submit handler shows the success message only on an actual `res.ok`; on failure it tells the visitor to email brooks.fastsolutions@gmail.com directly.
+- The submit handler shows the success message only on an actual `res.ok`; on failure an inline error tells the visitor to email brooks@erasefriction.com directly.
+- **Public/business email is brooks@erasefriction.com everywhere** — site, legal pages, error messages, email reply-to, and the PDF. Do not reintroduce the old Gmail address in user-facing copy.
+- **Submission cap: Netlify free tier = 100 submissions/month TOTAL across both forms.** Past the cap Netlify silently rejects — the visitor still sees success, the webhook never fires, the lead is gone. Check Site → Forms usage when promoting the checklist; upgrade to Forms Level 1 if volume grows.
 
 ---
 

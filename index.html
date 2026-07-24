@@ -283,6 +283,22 @@
       gap: 0.875rem;
     }
 
+    .hero-checklist-link {
+      margin-top: 0.85rem;
+      font-size: 0.9375rem;
+    }
+
+    .hero-checklist-link a {
+      color: var(--color-accent-hover);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .hero-checklist-link a:hover {
+      color: var(--color-accent-deep);
+    }
+
     .hero-micro-copy {
       font-size: 0.8125rem;
       color: var(--color-muted);
@@ -861,6 +877,26 @@
       color: var(--color-muted);
     }
 
+    .form-note a,
+    .checklist-note a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Inline submit-failure message — replaces alert() so the error stays visible,
+       on-brand, and readable by screen readers. */
+    .form-error {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #b91c1c;
+      margin-top: 0.5rem;
+    }
+
+    .form-error a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     .form-success {
       display: none;
       background: var(--color-accent-tint);
@@ -951,6 +987,7 @@
         <a href="#services">Services</a>
         <a href="#process">Process</a>
         <a href="#about">About</a>
+        <a href="#checklist">Free Checklist</a>
       </div>
       <a href="#contact" class="btn btn-primary btn-sm">Tell us your bottleneck &rarr;</a>
     </nav>
@@ -968,6 +1005,7 @@
       <div class="hero-cta-group">
         <a href="#contact" class="btn btn-primary btn-lg">Tell us your bottleneck &rarr;</a>
         <p class="hero-micro-copy">Takes 2 minutes. We'll respond within 48 hours.</p>
+        <p class="hero-checklist-link"><a href="#checklist">Not ready? Grab the free Money-Leak Checklist &rarr;</a></p>
       </div>
     </div>
   </section>
@@ -1156,7 +1194,10 @@
           </div>
           <button type="submit" class="btn btn-primary btn-lg">Email me the checklist &rarr;</button>
         </form>
-        <p class="checklist-note">No spam. Unsubscribe anytime. We never share your email.</p>
+        <p class="form-error" id="checklist-error" role="alert" hidden>Couldn't send. Email
+          <a href="mailto:brooks@erasefriction.com">brooks@erasefriction.com</a> and we'll send the checklist over.</p>
+        <p class="checklist-note">No spam — one email, that's it. By requesting it you agree to our
+          <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
       </div>
     </div>
   </section>
@@ -1176,7 +1217,9 @@
           </div>
           <form class="contact-form" id="contact-form" name="contact" data-netlify="true" netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="contact" />
-            <input type="hidden" name="bot-field" />
+            <p class="hp-field" aria-hidden="true">
+              <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+            </p>
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Your name</label>
@@ -1206,6 +1249,8 @@
             </div>
             <div class="form-submit">
               <button type="submit" class="btn btn-primary btn-lg">Send it &mdash; we'll respond within 48 hours &rarr;</button>
+              <p class="form-error" id="contact-error" role="alert" hidden>Couldn't send. Email
+                <a href="mailto:brooks@erasefriction.com">brooks@erasefriction.com</a> and we'll take it from there.</p>
               <p class="form-note">No sales calls. No commitment. Just a real response.</p>
               <p class="form-note">By sending this you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
             </div>
@@ -1233,6 +1278,7 @@
     const success = document.getElementById('form-success');
     if (form) {
       const submitBtn = form.querySelector('button[type="submit"]');
+      const contactError = document.getElementById('contact-error');
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (submitBtn.disabled) return;
@@ -1240,6 +1286,7 @@
         const originalLabel = submitBtn.innerHTML;
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending…';
+        contactError.hidden = true;
 
         const data = new FormData(form);
         try {
@@ -1255,7 +1302,7 @@
           // Re-enable so a network blip doesn't strand the visitor on a dead button.
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalLabel;
-          alert("Something went wrong sending your message. Please email us directly at brooks.fastsolutions@gmail.com.");
+          contactError.hidden = false;
         }
       });
     }
@@ -1264,6 +1311,7 @@
     const checklistForm = document.getElementById('checklist-form');
     if (checklistForm) {
       const clBtn = checklistForm.querySelector('button[type="submit"]');
+      const clError = document.getElementById('checklist-error');
       checklistForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (clBtn.disabled) return;
@@ -1271,6 +1319,7 @@
         const clLabel = clBtn.innerHTML;
         clBtn.disabled = true;
         clBtn.textContent = 'Sending…';
+        clError.hidden = true;
 
         const data = new FormData(checklistForm);
         try {
@@ -1284,7 +1333,7 @@
         } catch (err) {
           clBtn.disabled = false;
           clBtn.innerHTML = clLabel;
-          alert("Something went wrong. Please email us at brooks.fastsolutions@gmail.com and we'll send the checklist over.");
+          clError.hidden = false;
         }
       });
     }

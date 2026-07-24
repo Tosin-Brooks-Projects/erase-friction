@@ -24,6 +24,9 @@ var SHARED_SECRET = 'CHANGE_ME_TO_A_RANDOM_STRING';
 var CHECKLIST_URL = 'https://erasefriction.com/ai-automation-checklist.pdf';
 var CHECKLIST_SUBJECT = 'Your Money-Leak Checklist';
 var CHECKLIST_FROM_NAME = 'Brooks at erase friction';
+// MailApp always sends FROM the Gmail account running this script; replyTo routes
+// the visitor's reply to the business address instead.
+var CHECKLIST_REPLY_TO = 'brooks@erasefriction.com';
 
 /**
  * One entry per Netlify form, keyed by the form's `name` attribute in the HTML.
@@ -213,6 +216,7 @@ function sendChecklist(email, name) {
     to: email,
     subject: CHECKLIST_SUBJECT,
     name: CHECKLIST_FROM_NAME,
+    replyTo: CHECKLIST_REPLY_TO,
     htmlBody: htmlBody,
     body: plainBody
   });

@@ -13,6 +13,14 @@
     # CSS and JS live inline in index.html — drop it if that ever changes.
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
 
+# The checklist PDF must stay publicly fetchable (the delivery email links to it),
+# but noindex keeps search engines from handing it out and bypassing the email gate.
+# Do NOT add a robots.txt Disallow for it — crawlers must fetch it to see this header.
+[[headers]]
+  for = "/*.pdf"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
 # Fingerprint-free static assets, so cache hard but let HTML revalidate.
 [[headers]]
   for = "/*.webp"
