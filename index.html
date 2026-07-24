@@ -49,9 +49,10 @@
       --color-bg: #f5f4f0;
       --color-surface: #ffffff;
       --color-text: #1a1a1a;
-      --color-muted: #6b7280;
+      --color-muted: #5f6774;
       --color-accent: #0d9488;
       --color-accent-hover: #0f766e;
+      --color-accent-deep: #115e59;
       --color-accent-tint: #f0fdfa;
       --color-accent-light: #ccfbf1;
       --color-border: #e5e7eb;
@@ -126,6 +127,7 @@
     .btn-sm {
       font-size: 0.875rem;
       padding: 0.5rem 1.125rem;
+      min-height: 44px;
     }
 
     .btn-lg {
@@ -133,15 +135,22 @@
       padding: 0.85rem 1.75rem;
     }
 
+    /* Deeper teal than --color-accent: white on #0d9488 is only 3.74:1. */
     .btn-primary {
-      background-color: var(--color-accent);
+      background-color: var(--color-accent-hover);
       color: #fff;
       box-shadow: 0 1px 4px rgba(13, 148, 136, 0.25);
     }
 
     .btn-primary:hover {
-      background-color: var(--color-accent-hover);
+      background-color: var(--color-accent-deep);
       box-shadow: 0 6px 18px rgba(13, 148, 136, 0.35);
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .btn-white {
@@ -619,6 +628,8 @@
       display: flex;
       gap: 1.5rem;
       flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 0.75rem;
     }
 
     .footer-links a {
@@ -636,7 +647,7 @@
       max-width: 1100px;
       margin: 0 auto;
       font-size: 0.8125rem;
-      color: #6b7280;
+      color: #9ca3af;
     }
 
     /* CONTACT FORM */
@@ -650,6 +661,12 @@
       gap: 3rem;
       max-width: 900px;
       margin: 0 auto;
+    }
+
+    /* Grid items default to min-width:auto, so the form's widest control
+       (the timeline select) forced the page ~29px wider than a 375px screen. */
+    .contact-inner > * {
+      min-width: 0;
     }
 
     .contact-intro h2 {
@@ -725,6 +742,8 @@
       padding: 0.75rem 1rem;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
       outline: none;
       -webkit-appearance: none;
     }
@@ -749,6 +768,10 @@
 
     .form-submit .btn {
       align-self: flex-start;
+      max-width: 100%;
+      /* .btn is nowrap by default; this label is long enough to overflow a 375px screen. */
+      white-space: normal;
+      text-align: center;
     }
 
     .form-note {
@@ -836,7 +859,7 @@
 
 <body>
 
-  <a href="#problem" class="skip-link">Skip to main content</a>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <header class="navbar">
     <nav class="nav-inner">
@@ -850,6 +873,8 @@
       <a href="#contact" class="btn btn-primary btn-sm">Tell us your bottleneck &rarr;</a>
     </nav>
   </header>
+
+  <main id="main">
 
   <section class="hero">
     <div class="hero-blob" aria-hidden="true"></div>
@@ -1008,18 +1033,18 @@
         <div class="team-grid">
           <div class="team-member">
             <a href="https://www.linkedin.com/in/brooksconkle/" target="_blank" rel="noopener noreferrer" aria-label="Brooks Conkle on LinkedIn">
-              <img src="Brooks.png" alt="Brooks Conkle" class="team-photo" loading="lazy" />
+              <img src="Brooks.webp" alt="Brooks Conkle" class="team-photo" width="110" height="110" loading="lazy" />
             </a>
             <div class="team-member-name">Brooks Conkle</div>
             <div class="team-member-title">Operations &amp; Strategy</div>
           </div>
           <div class="team-member">
-            <img src="Tosin.png" alt="Tosin Alli" class="team-photo" loading="lazy" />
+            <img src="Tosin.webp" alt="Tosin Alli" class="team-photo" width="110" height="110" loading="lazy" />
             <div class="team-member-name">Tosin Alli</div>
             <div class="team-member-title">Engineering &amp; AI</div>
           </div>
           <div class="team-member">
-            <img src="Kea.png" alt="Kea" class="team-photo" loading="lazy" />
+            <img src="Kea.webp" alt="Kea" class="team-photo" width="110" height="110" loading="lazy" />
             <div class="team-member-name">Kea</div>
             <div class="team-member-title">He's always on. Never calls in sick.</div>
           </div>
@@ -1037,7 +1062,7 @@
           <p class="contact-phone">Prefer to talk? Call or text <a href="tel:+12515545575">251-554-5575</a>.</p>
         </div>
         <div>
-          <div class="form-success" id="form-success">
+          <div class="form-success" id="form-success" role="status" aria-live="polite">
             <h3>We got it.</h3>
             <p>Expect a response within 48 hours. We'll come back with something actually useful.</p>
           </div>
@@ -1074,6 +1099,7 @@
             <div class="form-submit">
               <button type="submit" class="btn btn-primary btn-lg">Send it &mdash; we'll respond within 48 hours &rarr;</button>
               <p class="form-note">No sales calls. No commitment. Just a real response.</p>
+              <p class="form-note">By sending this you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</p>
             </div>
           </form>
         </div>
@@ -1081,9 +1107,15 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="footer">
     <div class="footer-bottom" style="text-align: center;">
-      <p>&copy; <span id="year">2026</span> <span class="logo-erase" style="color: var(--color-accent); font-weight: 600;">erase</span> <span class="logo-friction" style="text-decoration: line-through; text-decoration-color: var(--color-accent); text-decoration-thickness: 1.5px; font-weight: 600;">friction</span>. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+      <p>&copy; <span id="year">2026</span> <a href="/" aria-label="erase friction — home"><span class="logo-erase" style="color: var(--color-accent); font-weight: 600;">erase</span> <span class="logo-friction" style="text-decoration: line-through; text-decoration-color: var(--color-accent); text-decoration-thickness: 1.5px; font-weight: 600;">friction</span></a>. All rights reserved.</p>
       <p class="footer-phone">Call or text <a href="tel:+12515545575">251-554-5575</a></p>
     </div>
   </footer>
@@ -1092,8 +1124,15 @@
     const form = document.getElementById('contact-form');
     const success = document.getElementById('form-success');
     if (form) {
+      const submitBtn = form.querySelector('button[type="submit"]');
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (submitBtn.disabled) return;
+
+        const originalLabel = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+
         const data = new FormData(form);
         try {
           const res = await fetch('/', {
@@ -1105,6 +1144,9 @@
           form.style.display = 'none';
           success.style.display = 'block';
         } catch (err) {
+          // Re-enable so a network blip doesn't strand the visitor on a dead button.
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalLabel;
           alert("Something went wrong sending your message. Please email us directly at brooks.fastsolutions@gmail.com.");
         }
       });
