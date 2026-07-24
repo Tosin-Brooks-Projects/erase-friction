@@ -35,8 +35,10 @@ This file gives Claude Code full context on how this project should be built, ma
 ```
 /
 ├── index.html                 # entire landing page — all HTML, CSS, and JS inline
+│                               #   two Netlify forms: "contact" and "checklist"
 ├── privacy.html               # privacy policy (self-contained styles)
 ├── terms.html                 # terms of service (self-contained styles)
+├── thank-you.html             # post-signup page for the checklist form (noindex)
 ├── netlify.toml               # security headers + asset caching
 ├── favicon.svg
 ├── robots.txt
@@ -50,7 +52,7 @@ This file gives Claude Code full context on how this project should be built, ma
 ├── logo-domain.svg / .png     # wordmark + .com, for banners and cards
 ├── logo-domain-on-dark.svg / .png     # same, for dark backgrounds
 ├── scripts/
-│   ├── form-to-sheet.gs       # Apps Script — Netlify webhook → Google Sheet
+│   ├── form-to-sheet.gs       # Apps Script — Netlify webhooks → one Sheet, tab per form
 │   └── README.md              # setup + troubleshooting for the above
 └── CLAUDE.md
 ```
@@ -181,12 +183,16 @@ Before pushing to production:
 
 ---
 
-## 📨 Contact Form (Netlify Forms)
-The contact form (`name="contact"`) is a **Netlify Form**. Submissions are captured server-side by Netlify and stored in the dashboard (Site → **Forms** → "contact"). There is **no backend and no email address in the code** — leads only email you if a notification is configured in Netlify.
+## 📨 Forms (Netlify Forms)
+Two **Netlify Forms** live in `index.html`, both captured server-side and stored in the dashboard (Site → **Forms**):
+- **`contact`** — the in-depth bottleneck form. On submit, shows an inline success message.
+- **`checklist`** — the AI-checklist lead magnet (name + email only). On submit, redirects to `/thank-you`.
+
+There is **no backend and no email address in the code** — leads only email you if a notification is configured in Netlify.
 
 **Email notifications setup:** Site configuration → **Forms → Form notifications → Add notification → Email notification**. Without this, leads pile up silently in the dashboard.
 
-**Google Sheet mirror:** an outgoing webhook on the same screen forwards each submission to a Google Apps Script Web App, which appends a row to a Sheet. Setup and troubleshooting live in [`scripts/README.md`](scripts/README.md). Changing a form field name in `index.html` means updating `COLUMNS` in `scripts/form-to-sheet.gs`, or the new field is silently dropped.
+**Google Sheet mirror + checklist delivery:** one outgoing webhook per form forwards submissions to a Google Apps Script Web App, which appends a row to **one Sheet, one tab per form**, and — for `checklist` — emails the checklist from your Gmail. Setup and troubleshooting live in [`scripts/README.md`](scripts/README.md). Routing is by form name; an unrecognized form lands in an **Unrouted** tab rather than being dropped. Adding/renaming a field means updating that form's `columns` in `scripts/form-to-sheet.gs`, or the field is silently dropped. The checklist asset URL is the `CHECKLIST_URL` constant in that file.
 
 **AJAX submission format:** the JS posts **URL-encoded** (`application/x-www-form-urlencoded` via `URLSearchParams`), NOT multipart `FormData`. This is Netlify's recommended pattern for JS-submitted forms — multipart AJAX submissions can silently fail to register. Keep it URL-encoded unless a file-upload field is added.
 
@@ -242,6 +248,9 @@ N/A — no backend API. All form handling is via Netlify Forms.
 | 2026-07-23 | Buttons use `--color-accent-hover` (#0f766e), not `--color-accent` | White on #0d9488 is 3.74:1 — fails WCAG AA. #0f766e gives 5.47:1. The brand teal is still used for graphics, borders, and the strikethrough, where 3:1 is fine. |
 | 2026-07-23 | Added privacy.html + terms.html as separate pages | Legal text is long and versioned; inlining it in index.html would bury the landing page. These are the exception to the single-file rule. |
 | 2026-07-23 | Grid children in `.contact-inner` need `min-width: 0` | Grid items default to `min-width: auto`, so the timeline `<select>` and the submit button forced ~29px of horizontal scroll at 375px. Watch for this whenever a form control goes inside a grid. |
+| 2026-07-24 | Added `checklist` lead-magnet form + `thank-you.html` | Second Netlify form for a low-commitment name+email capture. Redirects to a noindex thank-you page; the Apps Script emails the checklist. Chosen over an on-page download so the "we'll email you a copy" wording nudges real email entry. |
+| 2026-07-24 | One Sheet, one tab per form (routed by form name) | Simpler than a Sheet per form: one deployment, one webhook URL, one secret. `FORMS` in `form-to-sheet.gs` maps each Netlify form name to a tab + columns; unknown forms fall back to an Unrouted tab so nothing is lost. |
+| 2026-07-24 | Checklist emailed via Apps Script `MailApp`, not an ESP | No new service or cost for a low-volume lead magnet; send-only scope. Sends from the owner's Gmail (~100/day consumer cap). Move to a real ESP if the list grows. Email send is isolated in try/catch so a failure never loses the logged lead. |
 
 ---
 

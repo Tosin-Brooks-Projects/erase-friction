@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check your inbox — erase friction</title>
+  <meta name="description" content="Your AI Automation Checklist is on its way." />
+  <!-- Post-conversion page: no SEO value, keep it out of the index. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-bg: #f5f4f0;
+      --color-surface: #ffffff;
+      --color-text: #1a1a1a;
+      --color-muted: #5f6774;
+      --color-accent: #0d9488;
+      --color-accent-hover: #0f766e;
+      --color-accent-deep: #115e59;
+      --color-accent-tint: #f0fdfa;
+      --color-accent-light: #ccfbf1;
+      --color-border: #e5e7eb;
+      --font-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-base);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--color-accent-hover); text-decoration: none; }
+    a:hover { color: var(--color-accent); }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 var(--color-border);
+    }
+
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; max-width: 1100px; margin: 0 auto;
+    }
+
+    .nav-logo { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; color: inherit; }
+    .nav-logo .logo-erase { color: var(--color-accent); }
+    .nav-logo .logo-friction {
+      text-decoration: line-through;
+      text-decoration-color: var(--color-accent);
+      text-decoration-thickness: 1.5px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+    }
+
+    .card {
+      max-width: 520px;
+      text-align: center;
+    }
+
+    .check-badge {
+      width: 68px; height: 68px;
+      margin: 0 auto 1.75rem;
+      border-radius: 50%;
+      background: var(--color-accent-tint);
+      border: 1px solid var(--color-accent-light);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-accent-deep);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .lede { font-size: 1.0625rem; color: var(--color-muted); line-height: 1.6; margin-bottom: 1rem; }
+    .fine { font-size: 0.9rem; color: var(--color-muted); margin-bottom: 2rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-family: var(--font-base); font-weight: 600; font-size: 1rem;
+      padding: 0.85rem 1.75rem; min-height: 44px;
+      border: none; cursor: pointer; border-radius: 999px;
+      background: var(--color-accent-hover); color: #fff;
+      box-shadow: 0 1px 4px rgba(13, 148, 136, 0.25);
+      transition: background-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+    }
+    .btn:hover { background: var(--color-accent-deep); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(13, 148, 136, 0.35); }
+
+    .footer { background: #111827; color: #9ca3af; text-align: center; padding: 1.5rem; font-size: 0.8125rem; }
+    .footer a { color: #9ca3af; }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <nav class="nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-erase">erase</span> <span class="logo-friction">friction</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="check-badge" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h1>Check your inbox.</h1>
+      <p class="lede">Your AI Automation Checklist is on its way &mdash; it should land in the next minute or two.</p>
+      <p class="fine">Not there? Check your spam or promotions folder, or email
+        <a href="mailto:brooks.fastsolutions@gmail.com">brooks.fastsolutions@gmail.com</a> and we'll resend it.</p>
+      <a href="/" class="btn">Back to home &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year">2026</span> erase friction. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
+</body>
+
+</html>
