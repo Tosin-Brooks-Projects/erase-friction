@@ -22,7 +22,7 @@ var SHARED_SECRET = 'CHANGE_ME_TO_A_RANDOM_STRING';
 // The PDF lives at the site root (ai-automation-checklist.pdf), so this URL is live
 // once the branch is merged to main and deployed.
 var CHECKLIST_URL = 'https://erasefriction.com/ai-automation-checklist.pdf';
-var CHECKLIST_SUBJECT = 'Your AI Automation Checklist';
+var CHECKLIST_SUBJECT = 'Your Money-Leak Checklist';
 var CHECKLIST_FROM_NAME = 'Brooks at erase friction';
 
 /**
@@ -170,7 +170,7 @@ function sendChecklist(email, name) {
   var htmlBody =
     '<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1a1a1a;max-width:520px">' +
     '<p>' + escapeHtml(greeting) + '</p>' +
-    '<p>Thanks for grabbing the AI Automation Checklist. Here it is:</p>' +
+    '<p>Thanks for grabbing the Money-Leak Checklist. Here it is:</p>' +
     '<p><a href="' + CHECKLIST_URL + '" style="display:inline-block;background:#0f766e;color:#fff;' +
     'text-decoration:none;font-weight:600;padding:12px 22px;border-radius:8px">Open the checklist &rarr;</a></p>' +
     '<p>Work through it on your own team, and if a bottleneck jumps out, just reply to this email — ' +
@@ -178,7 +178,7 @@ function sendChecklist(email, name) {
     '<p>&mdash; Brooks<br>erase friction</p>' +
     '</div>';
   var plainBody =
-    greeting + '\n\nThanks for grabbing the AI Automation Checklist. Here it is:\n' +
+    greeting + '\n\nThanks for grabbing the Money-Leak Checklist. Here it is:\n' +
     CHECKLIST_URL + '\n\nWork through it on your own team, and if a bottleneck jumps out, ' +
     'just reply to this email.\n\n— Brooks\nerase friction';
 
