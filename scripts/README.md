@@ -31,10 +31,10 @@ When a `checklist` submission arrives, the script emails the AI Automation Check
 from the Gmail account running it. The visitor is sent to `/thank-you`, which tells
 them to check their inbox.
 
-**Before this works, set the asset.** In `form-to-sheet.gs`, replace `CHECKLIST_URL`
-with the real hosted file — e.g. `https://erasefriction.com/ai-automation-checklist.pdf`
-once you've added the PDF to the site. Until then, signups are still logged; they just
-receive a broken link. `CHECKLIST_SUBJECT` and `CHECKLIST_FROM_NAME` are next to it.
+**The asset** is `ai-automation-checklist.pdf` at the site root, so `CHECKLIST_URL`
+already points at it — live once the branch is merged and deployed. To swap in a new
+checklist, replace that PDF (keep the filename) or update `CHECKLIST_URL`.
+`CHECKLIST_SUBJECT` and `CHECKLIST_FROM_NAME` sit next to it.
 
 The email uses `MailApp`, so the only added permission is send-only. It sends from the
 script owner's address. Gmail caps consumer accounts at ~100 recipients/day and Workspace

@@ -19,9 +19,9 @@
 var SHARED_SECRET = 'CHANGE_ME_TO_A_RANDOM_STRING';
 
 // --- Checklist lead magnet: the email sent to everyone who opts in. ---
-// Replace CHECKLIST_URL with the real hosted file (e.g. https://erasefriction.com/ai-automation-checklist.pdf).
-// Until it's a real link, signups are still logged — they just won't receive a working download.
-var CHECKLIST_URL = 'https://erasefriction.com/REPLACE-WITH-CHECKLIST.pdf';
+// The PDF lives at the site root (ai-automation-checklist.pdf), so this URL is live
+// once the branch is merged to main and deployed.
+var CHECKLIST_URL = 'https://erasefriction.com/ai-automation-checklist.pdf';
 var CHECKLIST_SUBJECT = 'Your AI Automation Checklist';
 var CHECKLIST_FROM_NAME = 'Brooks at erase friction';
 
