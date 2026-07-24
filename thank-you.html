@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Check your inbox — erase friction</title>
-  <meta name="description" content="Your Money-Leak Checklist is on its way." />
+  <title>Your Money-Leak Checklist — erase friction</title>
+  <meta name="description" content="View and download your Money-Leak Checklist. A copy is also on its way to your inbox." />
   <!-- Post-conversion page: no SEO value, keep it out of the index. -->
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -83,17 +83,53 @@
     }
 
     .card {
-      max-width: 520px;
+      max-width: 560px;
       text-align: center;
     }
 
-    .check-badge {
-      width: 68px; height: 68px;
+    .cover-link {
+      display: inline-block;
       margin: 0 auto 1.75rem;
-      border-radius: 50%;
+      border-radius: 10px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .cover-link img {
+      display: block;
+      width: min(240px, 60vw);
+      height: auto;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .cover-link:hover {
+      transform: translateY(-4px);
+    }
+
+    .cover-link:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 4px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    /* .btn.btn-secondary outranks the .btn base rules defined further down. */
+    .btn.btn-secondary {
+      background: var(--color-surface);
+      color: var(--color-accent-hover);
+      border: 1.5px solid var(--color-accent-light);
+      box-shadow: none;
+    }
+
+    .btn.btn-secondary:hover {
       background: var(--color-accent-tint);
-      border: 1px solid var(--color-accent-light);
-      display: flex; align-items: center; justify-content: center;
       color: var(--color-accent-deep);
     }
 
@@ -133,17 +169,19 @@
 
   <main>
     <div class="card">
-      <div class="check-badge" aria-hidden="true">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-          stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
+      <h1>Here's your checklist.</h1>
+      <p class="lede">We also sent a copy to your inbox, so it's there whenever you need it.</p>
+      <a href="/ai-automation-checklist.pdf" target="_blank" rel="noopener" class="cover-link"
+        aria-label="Open the Money-Leak Checklist PDF">
+        <img src="/checklist-cover.webp" alt="Cover of The Money-Leak Checklist" width="240" height="311" />
+      </a>
+      <div class="btn-row">
+        <a href="/ai-automation-checklist.pdf" target="_blank" rel="noopener" class="btn">View the checklist &rarr;</a>
+        <a href="/ai-automation-checklist.pdf" download="Money-Leak-Checklist.pdf" class="btn btn-secondary">Download PDF</a>
       </div>
-      <h1>Check your inbox.</h1>
-      <p class="lede">Your Money-Leak Checklist is on its way &mdash; it should land in the next minute or two.</p>
-      <p class="fine">Not there? Check your spam or promotions folder, or email
-        <a href="mailto:brooks@erasefriction.com">brooks@erasefriction.com</a> and we'll resend it.</p>
-      <a href="/" class="btn">Back to home &rarr;</a>
+      <p class="fine">No email? Check spam or promotions, or write
+        <a href="mailto:brooks@erasefriction.com">brooks@erasefriction.com</a>.</p>
+      <p class="fine"><a href="/">&larr; Back to home</a></p>
     </div>
   </main>
 

@@ -38,7 +38,9 @@ This file gives Claude Code full context on how this project should be built, ma
 │                               #   two Netlify forms: "contact" and "checklist"
 ├── privacy.html               # privacy policy (self-contained styles)
 ├── terms.html                 # terms of service (self-contained styles)
-├── thank-you.html             # post-signup page for the checklist form (noindex)
+├── thank-you.html             # post-signup page: shows the PDF cover + view/download (noindex)
+├── ai-automation-checklist.pdf        # the Money-Leak Checklist lead magnet
+├── checklist-cover.webp       # PDF page-1 thumbnail shown on thank-you.html
 ├── netlify.toml               # security headers + asset caching
 ├── favicon.svg
 ├── robots.txt
