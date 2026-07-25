@@ -15,52 +15,54 @@ This file gives Claude Code full context on how this project should be built, ma
 ---
 
 ## ⚙️ Tech Stack
-- **Frontend:** Static HTML/CSS/JS (no framework — intentional, keep it that way)
-- **Backend:** None — static site
-- **Forms:** Netlify Forms (honeypot spam protection included)
-- **Deployment:** Netlify
+- **Framework:** Next.js (App Router, TypeScript) — migrated from static HTML July 2026, see `MIGRATION.md`
+- **Forms:** `POST /api/lead` route handler → Google Sheet (service account) + Resend email
+- **Email:** Resend, from `brooks@erasefriction.com` (domain verified)
+- **Analytics:** GA4 (`G-V6HBH3FB5B`), gtag in the root layout
+- **Deployment:** Vercel (`main` = production, branches = previews)
 - **Version Control:** GitHub
 
 ---
 
 ## 🗂️ Architecture Rules
-- **No framework** — plain HTML/CSS/JS only. Do not introduce React, Vue, or any build tool.
-- **No backend** — this is a static site. All form handling goes through Netlify Forms.
-- No API keys or secrets anywhere in the codebase (none currently needed)
-- Keep the entire site in a single `index.html` unless a page genuinely needs to be split out
+- **Keep it lean** — marketing site first. No state management, no database, no auth until a feature genuinely needs it.
+- **All form handling goes through `/api/lead`** — validation, honeypot + minimum-time spam gates, Sheet write, email. The Sheet write is the system of record; email sends are best-effort and must never lose a logged lead.
+- **Secrets live in env vars only** (`.env.local` locally, Vercel project settings in prod — see `.env.example`). Nothing sensitive in the repo, ever.
+- Global styles in `app/globals.css` (ported verbatim from the old inline stylesheet) — no CSS framework.
 
 ---
 
 ## 📁 Project Structure
 ```
 /
-├── index.html                 # entire landing page — all HTML, CSS, and JS inline
-│                               #   two Netlify forms: "contact" and "checklist"
-├── privacy.html               # privacy policy (self-contained styles)
-├── terms.html                 # terms of service (self-contained styles)
-├── thank-you.html             # post-signup page: shows the PDF cover + view/download (noindex)
-├── ai-automation-checklist.pdf        # the Money-Leak Checklist lead magnet
-├── checklist-cover.webp       # PDF page-1 thumbnail shown on thank-you.html
-├── netlify.toml               # security headers + asset caching
-├── favicon.svg
-├── robots.txt
-├── sitemap.xml
-├── OG-image.jpg               # social share preview
-├── Brooks.webp                # team photo (220px, served)
-├── Tosin.webp                 # team photo (220px, served)
-├── Kea.webp                   # team photo (220px, served — AI agent mascot)
-├── Brooks.png / Tosin.png / Kea.png   # 800px originals, kept as sources only
-├── logo.png                   # wordmark
-├── logo-domain.svg / .png     # wordmark + .com, for banners and cards
-├── logo-domain-on-dark.svg / .png     # same, for dark backgrounds
-├── scripts/
-│   ├── form-to-sheet.gs       # Apps Script — Netlify webhooks → one Sheet, tab per form
-│   └── README.md              # setup + troubleshooting for the above
+├── app/
+│   ├── layout.tsx             # fonts, GA4, favicon
+│   ├── globals.css            # entire design system (ported from the old inline CSS)
+│   ├── page.tsx               # landing page
+│   ├── privacy/page.tsx       # privacy policy
+│   ├── terms/page.tsx         # terms of service
+│   ├── thank-you/page.tsx     # post-signup: PDF cover + view/download (noindex)
+│   └── api/lead/route.ts      # both forms: validate → Sheet → email
+├── components/
+│   ├── SiteChrome.tsx         # header, footer, wordmark
+│   ├── ContactForm.tsx        # client component
+│   ├── ChecklistForm.tsx      # client component
+│   ├── LegalShell.tsx         # shared frame for privacy/terms
+│   └── Year.tsx               # client-side footer year
+├── lib/
+│   ├── leads.ts               # FORMS config + Sheet append (googleapis)
+│   └── email.ts               # Resend: checklist delivery + owner notification
+├── public/                    # favicon, photos (webp), PDF, cover, og-image, robots, sitemap
+├── scripts/                   # RETIRED Apps Script pipeline, kept as reference
+├── next.config.ts             # security headers (CSP, PDF noindex, caching)
+├── MIGRATION.md               # what moved, what died, cutover checklist
+├── Brooks.png / Tosin.png / Kea.png   # 800px photo sources (not served)
+├── logo*.png / logo*.svg      # brand assets (not served)
 └── CLAUDE.md
 ```
 
-The three `.png` team photos are **sources, not assets** — `index.html` references the
-`.webp` versions. Re-export the WebP at 220×220 if a photo ever changes.
+The three `.png` team photos are **sources, not assets** — pages reference the
+`.webp` versions in `public/`. Re-export at 220×220 if a photo changes.
 
 ---
 
@@ -192,28 +194,14 @@ Before pushing to production:
 
 ---
 
-## 📨 Forms (Netlify Forms)
-Two **Netlify Forms** live in `index.html`, both captured server-side and stored in the dashboard (Site → **Forms**):
-- **`contact`** — the in-depth bottleneck form. On submit, shows an inline success message.
-- **`checklist`** — the AI-checklist lead magnet (name + email only). On submit, redirects to `/thank-you`.
+## 📨 Forms
+Both forms POST JSON to **`/api/lead`** with a `form` discriminator (`contact` | `checklist`).
 
-There is **no backend and no email address in the code** — leads only email you if a notification is configured in Netlify.
-
-**Email notifications setup:** Site configuration → **Forms → Form notifications → Add notification → Email notification**. Without this, leads pile up silently in the dashboard.
-
-**Google Sheet mirror + checklist delivery:** one outgoing webhook per form forwards submissions to a Google Apps Script Web App, which appends a row to **one Sheet, one tab per form**, and — for `checklist` — emails the checklist via **Resend** from `brooks@erasefriction.com` (PDF attached + linked; secrets in Script Properties, not code). Setup and troubleshooting live in [`scripts/README.md`](scripts/README.md). Routing is by form name; an unrecognized form lands in an **Unrouted** tab rather than being dropped. Adding/renaming a field means updating that form's `columns` in `scripts/form-to-sheet.gs`, or the field is silently dropped. The checklist asset URL is the `CHECKLIST_URL` constant in that file.
-
-**AJAX submission format:** the JS posts **URL-encoded** (`application/x-www-form-urlencoded` via `URLSearchParams`), NOT multipart `FormData`. This is Netlify's recommended pattern for JS-submitted forms — multipart AJAX submissions can silently fail to register. Keep it URL-encoded unless a file-upload field is added.
-
-**Gotchas when "notifications aren't arriving":**
-- **Test on production only.** Form submissions only register on the live deployed site (erasefriction.com). `localhost` and `file://` do NOT submit to Netlify — nothing will appear in the dashboard.
-- **Diagnostic fork:** first check whether the submission appears in the dashboard at all. Not there → capture problem (form detection, AJAX format, or testing on non-prod). There but no email → notification-config/delivery problem.
-- **Check the Spam tab.** Akismet-flagged submissions land under Forms → Spam and **never trigger notifications**.
-- **Check email spam/promotions folder** for mail from `forms@netlify.com`.
-- **Confirm form detection** — Netlify → Forms must list "contact" as an active form (detected at build from the static HTML). If missing, it was never detected.
-- The submit handler shows the success message only on an actual `res.ok`; on failure an inline error tells the visitor to email brooks@erasefriction.com directly.
-- **Public/business email is brooks@erasefriction.com everywhere** — site, legal pages, error messages, email reply-to, and the PDF. Do not reintroduce the old Gmail address in user-facing copy.
-- **Submission cap: Netlify free tier = 100 submissions/month TOTAL across both forms.** Past the cap Netlify silently rejects — the visitor still sees success, the webhook never fires, the lead is gone. Check Site → Forms usage when promoting the checklist; upgrade to Forms Level 1 if volume grows.
+- **Spam defense** (replaces Netlify's Akismet): off-screen honeypot (`bot-field`) and a minimum-time gate — the client sends `startedAt` from page load, and the server silently accepts-but-drops anything faster than 3s or missing the timestamp. Escalate to Cloudflare Turnstile if junk appears in the Sheet.
+- **Storage:** one Google Sheet, one tab per form (`Contact Leads`, `Checklist Signups`) via a service account. Tab names and column order must match `FORMS` in `lib/leads.ts`.
+- **Email:** `checklist` → visitor gets the PDF via Resend (attached + linked); `contact` → owner notification to `NOTIFY_EMAIL` with reply-to set to the lead. Send failures are logged but never lose the lead.
+- **GA4:** success fires `generate_lead` (param `form_name`), failure fires `form_error`. The checklist event uses beacon + callback/timeout so the `/thank-you` redirect never loses it.
+- **Testing forms locally** needs `.env.local` (see `.env.example`); without creds the route returns `502 storage failed` by design.
 
 ---
 
@@ -264,6 +252,7 @@ N/A — no backend API. All form handling is via Netlify Forms.
 | 2026-07-24 | Checklist emailed via Apps Script `MailApp`, not an ESP | No new service or cost for a low-volume lead magnet; send-only scope. Sends from the owner's Gmail (~100/day consumer cap). Move to a real ESP if the list grows. Email send is isolated in try/catch so a failure never loses the logged lead. |
 | 2026-07-24 | Switched checklist delivery from `MailApp` to **Resend** (supersedes the row above) | MailApp could only send from the personal Gmail, clashing with the brooks@erasefriction.com-everywhere rule and risking the Promotions tab. Resend sends domain-authenticated (SPF/DKIM) from brooks@erasefriction.com, attaches the PDF, and is the standard choice on Vercel — the coming Next.js rebuild reuses the same API. Secrets (`SHARED_SECRET`, `RESEND_API_KEY`) moved to Script Properties so re-pasting the script can't wipe them. |
 | 2026-07-24 | Thank-you page shows the PDF (cover + view/download) instead of "check your inbox" only | Instant payoff converts better; the email (with attachment) remains the keepable copy. Cover preview instead of an iframe because our own X-Frame-Options/frame-ancestors headers block framing the PDF, and inline PDF frames are unreliable on mobile. |
+| 2026-07-24 | **Migrated to Next.js on Vercel** (supersedes the static-HTML decision) | The owner runs Next/Vercel/Sheets pipelines routinely but had zero reps with Apps Script, whose save-vs-deploy model cost a full debugging day. `/api/lead` replaces Netlify Forms + webhook + Apps Script: secrets in env vars, IPs visible for spam defense, no 100/mo cap. Resend, the Sheet, GA4 and all URLs carry over unchanged. See MIGRATION.md for the cutover checklist. |
 
 ---
 
