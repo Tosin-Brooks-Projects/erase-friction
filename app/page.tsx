@@ -58,12 +58,7 @@ export default function Home() {
               Your team is doing work
               <br />a machine should do.
             </h1>
-            <p className="hero-sub">
-              We help you use AI in your business to 2x your team&rsquo;s output so you can focus on the meaningful
-              work.
-              <br />
-              <em>No subscriptions. Just the exact tool you need.</em>
-            </p>
+            <p className="hero-sub">Double your output. Not your headcount.</p>
             <div className="hero-cta-group">
               <a href="#contact" className="btn btn-primary btn-lg">
                 Tell us your bottleneck &rarr;
