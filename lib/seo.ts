@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 
+// Facebook caches a *failed* image fetch against the URL and won't retry it,
+// even on "Scrape Again". The filename is versioned so a fix can be forced
+// through: bump the suffix whenever the image changes or FB gets stuck.
 export const OG_IMAGE = {
-  url: "/og-image.jpg",
+  url: "/og-image-v2.jpg",
   width: 1200,
   height: 630,
   alt: "erase friction — Your team is doing work a machine should do.",

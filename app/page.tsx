@@ -17,7 +17,7 @@ const schema = {
   "@type": "ProfessionalService",
   name: "erase friction",
   url: "https://erasefriction.com",
-  logo: "https://erasefriction.com/og-image.jpg",
+  logo: "https://erasefriction.com/logo.png",
   telephone: "+1-251-554-5575",
   email: "brooks@erasefriction.com",
   description:
