@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Privacy() {
   return (
-    <LegalShell title="Privacy Policy" updated="24 July 2026">
+    <LegalShell title="Privacy Policy" updated="27 July 2026">
       <div className="lede">
         <p style={{ marginBottom: 0 }}>
           <strong>The short version:</strong> we collect what you type into our forms so we can reply to you or send
@@ -68,9 +68,9 @@ export default function Privacy() {
           <strong>To follow up</strong> about the specific inquiry you sent us.
         </li>
         <li>
-          <strong>To send you the checklist</strong> if you requested it. That&rsquo;s the only email a checklist
-          request triggers &mdash; we won&rsquo;t send you anything else unless you ask, and if we ever start a
-          newsletter, we&rsquo;ll invite you rather than auto-enroll you.
+          <strong>To send you the checklist and occasional emails</strong> if you requested it &mdash; automation
+          tips, and now and then an offer from us. Every email includes a way to unsubscribe, and opting out stops
+          them for good. We never share the list.
         </li>
         <li>
           <strong>To keep the site working</strong> and block spam and abuse.

@@ -34,10 +34,13 @@ export async function sendChecklist(email: string, name: string) {
       `<p>Thanks for grabbing the Money-Leak Checklist. It's attached, and this link always works too:</p>` +
       `<p><a href="${CHECKLIST_URL}" style="display:inline-block;background:#0f766e;color:#fff;text-decoration:none;font-weight:600;padding:12px 22px;border-radius:8px">Open the checklist &rarr;</a></p>` +
       `<p>Work through it on your own team, and if a bottleneck jumps out, just reply to this email — we read every one.</p>` +
-      `<p>&mdash; Brooks<br>erase friction</p></div>`,
+      `<p>&mdash; Brooks<br>erase friction</p>` +
+      `<p style="color:#5f6774;font-size:12px;margin-top:24px">You're getting this because you requested the checklist at erasefriction.com. ` +
+      `We'll send occasional automation tips — <a href="mailto:brooks@erasefriction.com?subject=unsubscribe" style="color:#5f6774">unsubscribe</a> anytime.</p></div>`,
     text:
       `${greeting}\n\nThanks for grabbing the Money-Leak Checklist. It's attached, and this link always works too:\n` +
-      `${CHECKLIST_URL}\n\nWork through it on your own team, and if a bottleneck jumps out, just reply to this email.\n\n— Brooks\nerase friction`,
+      `${CHECKLIST_URL}\n\nWork through it on your own team, and if a bottleneck jumps out, just reply to this email.\n\n— Brooks\nerase friction\n\n` +
+      `You're getting this because you requested the checklist at erasefriction.com. We'll send occasional automation tips — email brooks@erasefriction.com with subject "unsubscribe" to opt out anytime.`,
   };
 
   try {

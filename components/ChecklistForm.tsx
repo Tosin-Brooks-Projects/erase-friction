@@ -73,8 +73,8 @@ export default function ChecklistForm() {
         </p>
       )}
       <p className="checklist-note">
-        No spam &mdash; one email, that&rsquo;s it. By requesting it you agree to our <a href="/terms">Terms</a> and{" "}
-        <a href="/privacy">Privacy Policy</a>.
+        No spam &mdash; the checklist plus occasional automation tips, unsubscribe anytime. By requesting it you agree
+        to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.
       </p>
     </>
   );
