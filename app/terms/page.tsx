@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import LegalShell from "@/components/LegalShell";
+import { socialMeta } from "@/lib/seo";
+
+const TITLE = "Terms of Service — erase friction";
+const DESC =
+  "The terms that govern your use of erasefriction.com, including our contact form, content ownership, and limits of liability.";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — erase friction",
-  description:
-    "The terms that govern your use of erasefriction.com, including our contact form, content ownership, and limits of liability.",
+  title: TITLE,
+  description: DESC,
   alternates: { canonical: "/terms" },
+  ...socialMeta({ title: TITLE, description: DESC, path: "/terms" }),
 };
 
 export default function Terms() {

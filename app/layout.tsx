@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { socialMeta } from "@/lib/seo";
 import "./globals.css";
 
+const HOME_TITLE = "erase friction — Custom Software, Automation & AI Solutions";
+const HOME_DESC =
+  "erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down.";
+
+// Site-wide defaults — any page that doesn't set its own inherits these, so a
+// shared link always renders a card instead of a bare URL.
 export const metadata: Metadata = {
   metadataBase: new URL("https://erasefriction.com"),
   icons: { icon: { url: "/favicon.svg", type: "image/svg+xml" } },
+  ...socialMeta({ title: HOME_TITLE, description: HOME_DESC, path: "/" }),
 };
 
 const GA_ID = "G-V6HBH3FB5B";

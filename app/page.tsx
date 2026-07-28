@@ -8,21 +8,8 @@ export const metadata: Metadata = {
   description:
     "erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down.",
   alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    url: "/",
-    title: "erase friction — Custom Software, Automation & AI Solutions",
-    description:
-      "erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down.",
-    images: ["/og-image.jpg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "erase friction — Custom Software, Automation & AI Solutions",
-    description:
-      "erase friction builds custom software, workflow automations, and AI solutions that eliminate the manual work dragging your team down.",
-    images: ["/og-image.jpg"],
-  },
+  // openGraph/twitter come from the root layout — the defaults already describe
+  // this page, so overriding here would only risk them drifting apart.
 };
 
 const schema = {

@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import LegalShell from "@/components/LegalShell";
+import { socialMeta } from "@/lib/seo";
+
+const TITLE = "Privacy Policy — erase friction";
+const DESC =
+  "How erase friction collects, uses, stores, and protects the information you share through erasefriction.com.";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — erase friction",
-  description:
-    "How erase friction collects, uses, stores, and protects the information you share through erasefriction.com.",
+  title: TITLE,
+  description: DESC,
   alternates: { canonical: "/privacy" },
+  ...socialMeta({ title: TITLE, description: DESC, path: "/privacy" }),
 };
 
 export default function Privacy() {
