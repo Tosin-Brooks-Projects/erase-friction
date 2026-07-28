@@ -58,7 +58,9 @@ export default function Home() {
               Your team is doing work
               <br />a machine should do.
             </h1>
-            <p className="hero-sub">Double your output. Not your headcount.</p>
+            <p className="hero-sub">
+              Double your output. <em>Not your headcount.</em>
+            </p>
             <div className="hero-cta-group">
               <a href="#contact" className="btn btn-primary btn-lg">
                 Tell us your bottleneck &rarr;

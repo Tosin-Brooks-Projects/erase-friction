@@ -222,11 +222,18 @@ a {
 }
 
 .hero-sub {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1.125rem, 2.6vw, 1.5rem);
   color: var(--color-muted);
   max-width: 580px;
   margin: 0 auto 2.25rem;
-  line-height: 1.65;
+  line-height: 1.5;
+}
+
+/* Keeps the italic sentence whole, so a narrow screen breaks between the two
+   sentences instead of mid-phrase ("Not your / headcount."). */
+.hero-sub em {
+  font-style: italic;
+  white-space: nowrap;
 }
 
 .hero-cta-group {
