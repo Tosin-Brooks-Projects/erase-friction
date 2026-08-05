@@ -1115,3 +1115,92 @@ a {
 .nav-back:hover {
   color: var(--color-text);
 }
+
+/* TOOLS WE'VE BUILT */
+.tools {
+  padding: 5rem 0;
+  background-color: var(--color-bg);
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* The whole card is the link, so the hit area matches what looks clickable. */
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-accent-light);
+  box-shadow: var(--shadow-lg);
+}
+
+.tool-card:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.tool-name {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+}
+
+.tool-tagline {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-accent-hover);
+  margin-bottom: 0.6rem;
+}
+
+.tool-desc {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+  margin-bottom: 1.1rem;
+}
+
+/* Pushed to the bottom so the cue lines up across cards of unequal height. */
+.tool-visit {
+  margin-top: auto;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-accent-hover);
+}
+
+.tool-card:hover .tool-visit {
+  color: var(--color-accent-deep);
+}
+
+@media (min-width: 640px) {
+  .tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Visually hidden, still read aloud — used for the "opens in new tab" hint. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

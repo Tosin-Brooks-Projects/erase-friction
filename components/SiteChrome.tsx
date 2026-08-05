@@ -24,6 +24,7 @@ export function SiteHeader({ withNav = true }: { withNav?: boolean }) {
               <a href="/#services">Services</a>
               <a href="/#process">Process</a>
               <a href="/#about">About</a>
+              <a href="/#tools">Tools</a>
               <a href="/#checklist">Free Checklist</a>
             </div>
             <a href="/#contact" className="btn btn-primary btn-sm">

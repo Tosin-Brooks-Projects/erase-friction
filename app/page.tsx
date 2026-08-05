@@ -12,6 +12,25 @@ export const metadata: Metadata = {
   // this page, so overriding here would only risk them drifting apart.
 };
 
+// Internal builds we've opened up to the public. Adding one here is the only
+// change needed — the section renders from this list.
+const TOOLS = [
+  {
+    name: "Helpful Analytics",
+    tagline: "Simple GA4 reporting for marketing agencies",
+    desc: "Turns Google Analytics 4 into client-ready reporting, without the digging.",
+    url: "https://helpfulanalytics.com/",
+    host: "helpfulanalytics.com",
+  },
+  {
+    name: "Track it and Save",
+    tagline: "Subscription management & expense tracking",
+    desc: "Every recurring charge in one place — including the ones you forgot you were paying for.",
+    url: "https://trackitandsave.com/",
+    host: "trackitandsave.com",
+  },
+];
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -27,6 +46,13 @@ const schema = {
     { "@type": "Person", name: "Tosin Alli" },
   ],
   serviceType: ["Custom Software Development", "Workflow Automation", "AI Solutions"],
+  owns: TOOLS.map((t) => ({
+    "@type": "SoftwareApplication",
+    name: t.name,
+    url: t.url,
+    description: t.tagline,
+    applicationCategory: "BusinessApplication",
+  })),
 };
 
 export default function Home() {
@@ -230,6 +256,34 @@ export default function Home() {
                   <div className="team-member-title">He&rsquo;s always on. Never calls in sick.</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="tools" id="tools">
+          <div className="container">
+            <h2 className="section-heading">Tools we&rsquo;ve built</h2>
+            <p className="section-sub">
+              We build for ourselves first. When something works, we open it up to everyone.
+            </p>
+            <div className="tools-grid">
+              {TOOLS.map((tool) => (
+                <a
+                  key={tool.url}
+                  className="tool-card"
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <div className="tool-name">{tool.name}</div>
+                  <div className="tool-tagline">{tool.tagline}</div>
+                  <p className="tool-desc">{tool.desc}</p>
+                  <span className="tool-visit">
+                    {tool.host} &rarr;
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </section>
