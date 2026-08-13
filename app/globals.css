@@ -132,8 +132,17 @@ a {
   transition: top 0.15s ease;
 }
 
+/* Next.js moves focus here on every client-side navigation (it's the first
+   focusable element), which made the link appear unprompted when clicking back
+   to a page. Show on :focus, then hide again when the focus wasn't from a
+   keyboard. Written as two rules on purpose: a browser without :focus-visible
+   drops only the second, so keyboard users still get the link. */
 .skip-link:focus {
   top: 1rem;
+}
+
+.skip-link:focus:not(:focus-visible) {
+  top: -100%;
 }
 
 /* NAVBAR */
@@ -217,7 +226,9 @@ a {
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.03em;
-  max-width: 760px;
+  /* "Your team is doing work" needs ~804px at the 72px desktop size; at 760px it
+     wrapped early and orphaned "work" onto its own line, ignoring the <br />. */
+  max-width: 860px;
   margin: 0 auto 1.25rem;
 }
 
