@@ -306,10 +306,7 @@ export default function Home() {
             <div className="contact-inner">
               <div className="contact-intro">
                 <h2>Your competitors are automating. Are you?</h2>
-                <p>
-                  Tell us your biggest bottleneck. We&rsquo;ll come back within 48 hours with a real assessment &mdash;
-                  no pitch, no fluff.
-                </p>
+                <p>Tell us your biggest bottleneck. We&rsquo;ll come back within 48 hours with a real assessment.</p>
                 <p className="contact-phone">
                   Prefer to talk? Call or text <a href="tel:+12515545575">251-554-5575</a>.
                 </p>
