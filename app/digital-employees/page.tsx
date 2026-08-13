@@ -301,7 +301,7 @@ export default function DigitalEmployees() {
               <h2 className="section-heading">Ready to meet your first digital employee?</h2>
               <p className="section-sub">
                 Tell us the role. Within 48 hours you&rsquo;ll get a plan: what they&rsquo;d do, how they&rsquo;d plug
-                into your tools, and what they&rsquo;d cost. No pitch, no fluff.
+                into your tools, and what they&rsquo;d cost.
               </p>
               <HireForm />
             </div>
