@@ -60,18 +60,22 @@ export async function sendChecklist(email: string, name: string) {
   await resend(payload);
 }
 
-/** Owner notification for contact-form leads — replaces Netlify's email notification. */
-export async function notifyOwner(data: Record<string, string>, ip: string) {
+/** Owner notification for inbound leads — replaces Netlify's email notification. */
+export async function notifyOwner(
+  data: Record<string, string>,
+  ip: string,
+  opts: { subject: string; intro: string; fields: readonly string[] },
+) {
   const to = process.env.NOTIFY_EMAIL || REPLY_TO;
-  const rows = ["name", "email", "bottleneck", "tools", "timeline"]
+  const rows = opts.fields
     .map((k) => `<tr><td style="padding:4px 12px 4px 0;color:#5f6774;vertical-align:top">${k}</td><td style="padding:4px 0">${escapeHtml(data[k] || "")}</td></tr>`)
     .join("");
   await resend({
     from: FROM,
     to: [to],
     reply_to: data.email || REPLY_TO, // hitting Reply answers the lead directly
-    subject: `New lead: ${data.name || "someone"} — ${data.timeline || "no timeline"}`,
-    html: `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#1a1a1a"><p>Contact form submission:</p><table>${rows}</table><p style="color:#5f6774;font-size:13px">IP: ${escapeHtml(ip)}</p></div>`,
-    text: ["name", "email", "bottleneck", "tools", "timeline"].map((k) => `${k}: ${data[k] || ""}`).join("\n"),
+    subject: opts.subject,
+    html: `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#1a1a1a"><p>${escapeHtml(opts.intro)}</p><table>${rows}</table><p style="color:#5f6774;font-size:13px">IP: ${escapeHtml(ip)}</p></div>`,
+    text: opts.fields.map((k) => `${k}: ${data[k] || ""}`).join("\n"),
   });
 }

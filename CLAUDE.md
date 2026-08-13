@@ -42,11 +42,13 @@ This file gives Claude Code full context on how this project should be built, ma
 │   ├── privacy/page.tsx       # privacy policy
 │   ├── terms/page.tsx         # terms of service
 │   ├── thank-you/page.tsx     # post-signup: PDF cover + view/download (noindex)
-│   └── api/lead/route.ts      # both forms: validate → Sheet → email
+│   ├── digital-employees/page.tsx   # sales page: hire a digital teammate
+│   └── api/lead/route.ts      # all forms: validate → Sheet → email
 ├── components/
 │   ├── SiteChrome.tsx         # header, footer, wordmark
 │   ├── ContactForm.tsx        # client component
 │   ├── ChecklistForm.tsx      # client component
+│   ├── HireForm.tsx           # client component (/digital-employees)
 │   ├── LegalShell.tsx         # shared frame for privacy/terms
 │   └── Year.tsx               # client-side footer year
 ├── lib/
@@ -195,7 +197,7 @@ Before pushing to production:
 ---
 
 ## 📨 Forms
-Both forms POST JSON to **`/api/lead`** with a `form` discriminator (`contact` | `checklist`).
+All forms POST JSON to **`/api/lead`** with a `form` discriminator (`contact` | `checklist` | `hire`). Adding a form = one entry in `FORMS` (`lib/leads.ts`) — its Sheet tab is auto-created with a header row on first submission; fields listed in `optional` may be blank. `hire` (the `/digital-employees` page) sends an owner notification like `contact`.
 
 - **Spam defense** (replaces Netlify's Akismet): off-screen honeypot (`bot-field`) and a minimum-time gate — the client sends `startedAt` from page load, and the server silently accepts-but-drops anything faster than 3s or missing the timestamp. Escalate to Cloudflare Turnstile if junk appears in the Sheet.
 - **Storage:** one Google Sheet, one tab per form (`Contact Leads`, `Checklist Signups`) via a service account. Tab names and column order must match `FORMS` in `lib/leads.ts`.
@@ -253,6 +255,7 @@ N/A — no backend API. All form handling is via Netlify Forms.
 | 2026-07-24 | Switched checklist delivery from `MailApp` to **Resend** (supersedes the row above) | MailApp could only send from the personal Gmail, clashing with the brooks@erasefriction.com-everywhere rule and risking the Promotions tab. Resend sends domain-authenticated (SPF/DKIM) from brooks@erasefriction.com, attaches the PDF, and is the standard choice on Vercel — the coming Next.js rebuild reuses the same API. Secrets (`SHARED_SECRET`, `RESEND_API_KEY`) moved to Script Properties so re-pasting the script can't wipe them. |
 | 2026-07-24 | Thank-you page shows the PDF (cover + view/download) instead of "check your inbox" only | Instant payoff converts better; the email (with attachment) remains the keepable copy. Cover preview instead of an iframe because our own X-Frame-Options/frame-ancestors headers block framing the PDF, and inline PDF frames are unreliable on mobile. |
 | 2026-07-24 | **Migrated to Next.js on Vercel** (supersedes the static-HTML decision) | The owner runs Next/Vercel/Sheets pipelines routinely but had zero reps with Apps Script, whose save-vs-deploy model cost a full debugging day. `/api/lead` replaces Netlify Forms + webhook + Apps Script: secrets in env vars, IPs visible for spam defense, no 100/mo cap. Resend, the Sheet, GA4 and all URLs carry over unchanged. See MIGRATION.md for the cutover checklist. |
+| 2026-08-13 | Added `/digital-employees` sales page (persona faces from thispersondoesnotexist + explicit "100% digital" badge) | Productizes the agency as hireable digital teammates. Photoreal personas build the bond that makes teams actually delegate to them; the badge + joke bios keep the disclosure unmissable — human feel, zero deception. New `hire` form routes through the same `/api/lead` pipeline; Sheet tabs now auto-create. |
 
 ---
 

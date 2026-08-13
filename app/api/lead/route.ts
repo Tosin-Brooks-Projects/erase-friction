@@ -36,9 +36,14 @@ export async function POST(req: NextRequest) {
 
   // --- Validation ---
   const data: Record<string, string> = {};
+  const optional: readonly string[] = "optional" in config ? config.optional : [];
   for (const field of config.fields) {
     const v = body[field];
     if (typeof v !== "string" || !v.trim()) {
+      if (optional.includes(field)) {
+        data[field] = "";
+        continue;
+      }
       return NextResponse.json({ error: `missing ${field}` }, { status: 400 });
     }
     data[field] = v.trim().slice(0, MAX_FIELD);
@@ -63,7 +68,17 @@ export async function POST(req: NextRequest) {
     if (form === "checklist") {
       await sendChecklist(data.email, data.name);
     } else if (form === "contact") {
-      await notifyOwner(data, ip);
+      await notifyOwner(data, ip, {
+        subject: `New lead: ${data.name || "someone"} — ${data.timeline || "no timeline"}`,
+        intro: "Contact form submission:",
+        fields: ["name", "email", "bottleneck", "tools", "timeline"],
+      });
+    } else if (form === "hire") {
+      await notifyOwner(data, ip, {
+        subject: `Digital employee lead: ${data.name || "someone"} — ${data.role || "role TBD"}`,
+        intro: "Digital employee inquiry:",
+        fields: ["name", "email", "company", "role", "notes"],
+      });
     }
   } catch (err) {
     console.error(`${form} email failed (lead ${id} is logged):`, err);

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -ExecutionPolicy Bypass -File ~/scripts/code-review.ps1 -WorkingDir \"c:/Users/brook/OneDrive/Documents/Erase-Friction\")",
+      "Bash(node -e \"console.log\\(require\\('sharp'\\) ? 'sharp-ok' : 'no'\\)\")",
+      "Bash(python -c \"import cairosvg; print\\('cairosvg ok'\\)\")",
+      "Bash(python -c \"import PIL; print\\('PIL ok'\\)\")"
+    ]
+  }
+}
