@@ -238,6 +238,18 @@ export default function DigitalEmployees() {
           </div>
         </section>
 
+        <section className="de-promo">
+          <div className="container de-promo-inner">
+            <div>
+              <h2>New: hire a digital employee</h2>
+              <p>Graduate-level work at a fraction of minimum wage &mdash; onboarded in days, on the clock 24/7.</p>
+            </div>
+            <a href="#hire" className="btn btn-white btn-lg">
+              Build my digital employee &rarr;
+            </a>
+          </div>
+        </section>
+
         <section className="de-faq">
           <div className="container">
             <h2 className="section-heading">Questions everyone asks</h2>
