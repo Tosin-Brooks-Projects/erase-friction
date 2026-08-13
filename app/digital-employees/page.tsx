@@ -5,7 +5,7 @@ import { socialMeta } from "@/lib/seo";
 
 const TITLE = "Hire a Digital Employee — erase friction";
 const DESC =
-  "Onboard a digital employee: graduate-level work for a fraction of minimum wage, on the clock 24/7 — no interviews, no paperwork, no two-week notice.";
+  "Onboard a digital employee: graduate-level work for near human minimum wage, always on, with no interviews, no paperwork and no two-week notice.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -27,7 +27,7 @@ const TEAM = [
     img: "/de-sam.webp",
     name: "Sam",
     role: "Customer Support",
-    bio: "Answers the 3 a.m. “where’s my order?” email at 3:00:04 a.m. Escalates the genuinely hard ones to you.",
+    bio: "Answers the 3 a.m. “where is my order?” email at 3 a.m. Escalates the genuinely hard ones to you.",
   },
   {
     img: "/de-jordan.webp",
@@ -39,7 +39,7 @@ const TEAM = [
     img: "/de-quinn.webp",
     name: "Quinn",
     role: "Research & Content",
-    bio: "Reads 400-page industry reports cover to cover and calls it a good Tuesday. Cites sources without being asked.",
+    bio: "Reads 400 page industry reports cover to cover and calls it a good Tuesday. Cites sources without being asked.",
   },
   {
     img: "/de-riley.webp",
@@ -50,15 +50,15 @@ const TEAM = [
 ];
 
 const COMPARE: [string, string, string][] = [
-  ["Starts", "In ~6 weeks, after interviews", "This week"],
-  ["True cost", "Salary + ~30% taxes & benefits", "A fraction of minimum wage"],
-  ["Hours", "40/week, minus PTO and holidays", "24/7/365"],
-  ["Ramp time", "3–6 months to full speed", "Days"],
-  ["Sick days", "Sometimes on launch day", "Has literally never been sick"],
-  ["Turnover", "Moves on in ~2 years, knowledge included", "Never quits, forgets nothing"],
-  ["Paperwork", "I-9, W-4, payroll, benefits, handbook", "One onboarding call"],
-  ["Midnight ping", "Rude", "Answered in seconds"],
-  ["Parting ways", "Severance, hard feelings, paperwork", "Cancel. That’s it."],
+  ["Starts", "Six weeks, after interviews", "This week"],
+  ["True cost", "Salary plus 30 percent in taxes and benefits", "Near human minimum wage"],
+  ["Hours", "40 a week, minus vacation and holidays", "Always on, weekends included"],
+  ["Ramp time", "3 to 6 months", "Days to weeks"],
+  ["Sick days", "Sometimes on launch day", "Never had one"],
+  ["Turnover", "Moves on in two years, taking what they know", "Never quits, forgets nothing"],
+  ["Paperwork", "Tax forms, payroll, benefits, handbook", "One onboarding call"],
+  ["Midnight message", "Rude", "Answered in seconds"],
+  ["Parting ways", "Severance, hard feelings, paperwork", "Cancel anytime"],
 ];
 
 const schema = {
@@ -83,14 +83,14 @@ export default function DigitalEmployees() {
         <section className="hero de-hero">
           <div className="hero-blob" aria-hidden="true"></div>
           <div className="container">
-            <span className="badge">New &mdash; Digital Employees</span>
+            <span className="badge">New: Digital Employees</span>
             <h1 className="hero-headline">Your next hire isn&rsquo;t human.</h1>
-            <p className="hero-sub">Graduate-level work. Minimum-wage budget. On the clock 24/7.</p>
+            <p className="hero-sub">Graduate-level work. Near human minimum wage. Always on.</p>
             <div className="hero-cta-group">
               <a href="#hire" className="btn btn-primary btn-lg">
                 Build my digital employee &rarr;
               </a>
-              <p className="hero-micro-copy">Tell us the role &mdash; you&rsquo;ll have a plan within 48 hours.</p>
+              <p className="hero-micro-copy">Tell us the role and you&rsquo;ll have a plan within 48 hours.</p>
             </div>
           </div>
         </section>
@@ -98,23 +98,23 @@ export default function DigitalEmployees() {
         <section className="de-pain">
           <div className="container">
             <h2 className="section-heading">Hiring is the most expensive thing you do.</h2>
-            <p className="section-sub">Typical numbers for one US hire &mdash; before they produce anything.</p>
+            <p className="section-sub">Typical numbers for one US hire, before they produce anything.</p>
             <div className="de-stats">
               <div className="de-stat">
                 <div className="de-stat-num">6 weeks</div>
-                <div className="de-stat-label">average time to fill the seat</div>
+                <div className="de-stat-label">to fill an open seat</div>
               </div>
               <div className="de-stat">
-                <div className="de-stat-num">+30%</div>
-                <div className="de-stat-label">taxes &amp; benefits on top of salary</div>
+                <div className="de-stat-num">30%</div>
+                <div className="de-stat-label">added in taxes and benefits</div>
               </div>
               <div className="de-stat">
-                <div className="de-stat-num">3&ndash;6 mo</div>
-                <div className="de-stat-label">before they hit full speed</div>
+                <div className="de-stat-num">3 to 6 months</div>
+                <div className="de-stat-label">before a new hire is at full speed</div>
               </div>
               <div className="de-stat">
-                <div className="de-stat-num">~2 yrs</div>
-                <div className="de-stat-label">until they move on &mdash; with what they know</div>
+                <div className="de-stat-num">2 years</div>
+                <div className="de-stat-label">until they move on, taking what they know</div>
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@ export default function DigitalEmployees() {
                 <thead>
                   <tr>
                     <th scope="col"></th>
-                    <th scope="col">Human hire</th>
+                    <th scope="col">Human employee</th>
                     <th scope="col" className="compare-digital">
                       Digital employee
                     </th>
@@ -152,7 +152,7 @@ export default function DigitalEmployees() {
           <div className="container">
             <h2 className="section-heading">Meet the team you could hire this week.</h2>
             <p className="section-sub">
-              Real personas, zero humans &mdash; and we&rsquo;re not pretending otherwise. Brief them, give them
+              Real personas, zero humans, and we&rsquo;re not pretending otherwise. Brief them, give them
               feedback, ping them at midnight. Treat them exactly like teammates. They just happen to be software.
             </p>
             <div className="de-team-grid">
@@ -199,17 +199,17 @@ export default function DigitalEmployees() {
               </div>
               <div className="step-card">
                 <div className="step-number">2</div>
-                <h3 className="card-title">We build &amp; onboard</h3>
+                <h3 className="card-title">We build and onboard</h3>
                 <p className="card-desc">
-                  We assemble your digital employee, wire them into your tools &mdash; email, Slack, CRM, spreadsheets
-                  &mdash; and train them on your way of working.
+                  We assemble your digital employee, wire them into your tools (email, Slack, CRM, spreadsheets)
+                  and train them on your way of working.
                 </p>
               </div>
               <div className="step-card">
                 <div className="step-number">3</div>
                 <h3 className="card-title">You manage, they work</h3>
                 <p className="card-desc">
-                  Assign work, review output, give feedback &mdash; like any teammate. They get better every week. Not
+                  Assign work, review output, give feedback, like any teammate. They get better every week. Not
                   working out? Cancel. No exit interview.
                 </p>
               </div>
@@ -224,11 +224,11 @@ export default function DigitalEmployees() {
             <div className="de-honest-grid">
               <div className="de-honest-item">
                 <h3>Not a judgment-free zone</h3>
-                <p>Decisions with real stakes route to a human for sign-off. That&rsquo;s by design, not a limitation.</p>
+                <p>Decisions with real stakes go to a human for approval. That is by design, not a limitation.</p>
               </div>
               <div className="de-honest-item">
                 <h3>Not for licensed work</h3>
-                <p>Legal, medical, and financial advice stay with licensed professionals. Your digital employee preps; a human decides.</p>
+                <p>Legal, medical and financial advice stay with licensed professionals. Your digital employee prepares the work and a human decides.</p>
               </div>
               <div className="de-honest-item">
                 <h3>Not magic</h3>
@@ -242,7 +242,7 @@ export default function DigitalEmployees() {
           <div className="container de-promo-inner">
             <div>
               <h2>New: hire a digital employee</h2>
-              <p>Graduate-level work at a fraction of minimum wage &mdash; onboarded in days, on the clock 24/7.</p>
+              <p>Graduate-level work for near human minimum wage, onboarded in days, always on.</p>
             </div>
             <a href="#hire" className="btn btn-white btn-lg">
               Build my digital employee &rarr;
@@ -265,9 +265,9 @@ export default function DigitalEmployees() {
               <details>
                 <summary>What does one cost?</summary>
                 <p>
-                  It depends on the role, but here&rsquo;s the anchor: a fraction of a minimum-wage salary &mdash; with
-                  no payroll taxes, benefits, equipment, or PTO stacked on top. You&rsquo;ll get an exact number with
-                  your plan, within 48 hours.
+                  It depends on the role, but here&rsquo;s the anchor: near human minimum wage, with no payroll taxes,
+                  benefits, equipment or vacation stacked on top. You&rsquo;ll get an exact number with your plan,
+                  within 48 hours.
                 </p>
               </details>
               <details>
@@ -287,7 +287,7 @@ export default function DigitalEmployees() {
               <details>
                 <summary>My role isn&rsquo;t on the list.</summary>
                 <p>
-                  The list is just the greatest hits. If the work happens at a computer, describe it &mdash; we&rsquo;ll
+                  The list is just the greatest hits. If the work happens at a computer, describe it and we&rsquo;ll
                   tell you within 48 hours whether a digital employee can do it, and what that would look like.
                 </p>
               </details>

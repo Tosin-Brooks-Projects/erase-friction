@@ -73,10 +73,13 @@ export default function HireForm() {
           <option value="" disabled>
             Select one...
           </option>
-          <option value="admin-ops">Admin &amp; operations</option>
-          <option value="support">Customer support</option>
-          <option value="sales">Sales &amp; outreach</option>
-          <option value="research-content">Research &amp; content</option>
+          {/* Labels match the persona cards on /digital-employees exactly, so the
+              role someone picks is the one they just read about. Values are
+              unchanged — the Sheet's existing data stays comparable. */}
+          <option value="admin-ops">Operations &amp; Admin</option>
+          <option value="support">Customer Support</option>
+          <option value="sales">Sales Development</option>
+          <option value="research-content">Research &amp; Content</option>
           <option value="marketing">Marketing</option>
           <option value="other">Something else (tell us below)</option>
         </select>
