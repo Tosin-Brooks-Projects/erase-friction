@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NavMenu from "./NavMenu";
 import Year from "./Year";
 
 export function Wordmark() {
@@ -18,18 +19,15 @@ export function SiteHeader({ withNav = true }: { withNav?: boolean }) {
           <Wordmark />
         </Link>
         {withNav && (
-          <>
-            {/* Destinations only — the homepage narrative (problem/services/process/
-                about) is read by scrolling and lives in the footer sitemap. */}
-            <div className="nav-links">
-              <Link href="/digital-employees">Digital Employees</Link>
-              <a href="/#tools">Tools</a>
-              <a href="/#checklist">Free Checklist</a>
-            </div>
+          <div className="nav-actions">
             <a href="/#contact" className="btn btn-primary btn-sm">
-              Tell us your bottleneck &rarr;
+              {/* The full label doesn't fit next to the logo and menu button on
+                  small phones; CSS swaps in the short one below ~480px. */}
+              <span className="cta-full">Tell us your bottleneck &rarr;</span>
+              <span className="cta-short">Your bottleneck &rarr;</span>
             </a>
-          </>
+            <NavMenu />
+          </div>
         )}
       </nav>
     </header>
