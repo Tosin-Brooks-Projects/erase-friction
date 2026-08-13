@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
 import ContactForm from "@/components/ContactForm";
 import ChecklistForm from "@/components/ChecklistForm";
@@ -180,6 +181,18 @@ export default function Home() {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="de-promo">
+          <div className="container de-promo-inner">
+            <div>
+              <h2>New: hire a digital employee</h2>
+              <p>Graduate-level work at a fraction of minimum wage &mdash; onboarded in days, on the clock 24/7.</p>
+            </div>
+            <Link href="/digital-employees" className="btn btn-white btn-lg">
+              Meet the team &rarr;
+            </Link>
           </div>
         </section>
 

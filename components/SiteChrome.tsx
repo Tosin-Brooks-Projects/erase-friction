@@ -19,13 +19,11 @@ export function SiteHeader({ withNav = true }: { withNav?: boolean }) {
         </Link>
         {withNav && (
           <>
+            {/* Destinations only — the homepage narrative (problem/services/process/
+                about) is read by scrolling and lives in the footer sitemap. */}
             <div className="nav-links">
-              <a href="/#problem">The Problem</a>
-              <a href="/#services">Services</a>
-              <a href="/#process">Process</a>
-              <a href="/#about">About</a>
-              <a href="/#tools">Tools</a>
               <Link href="/digital-employees">Digital Employees</Link>
+              <a href="/#tools">Tools</a>
               <a href="/#checklist">Free Checklist</a>
             </div>
             <a href="/#contact" className="btn btn-primary btn-sm">
@@ -41,11 +39,38 @@ export function SiteHeader({ withNav = true }: { withNav?: boolean }) {
 export function SiteFooter() {
   return (
     <footer className="footer">
-      <div className="footer-bottom" style={{ textAlign: "center" }}>
-        <div className="footer-links">
-          <Link href="/privacy">Privacy Policy</Link>
-          <Link href="/terms">Terms of Service</Link>
+      <div className="container footer-inner">
+        <div className="footer-brand">
+          <Link href="/" className="footer-logo" aria-label="erase friction — home">
+            <Wordmark />
+          </Link>
+          <p className="footer-tagline">Custom software, automation &amp; AI that erase the busywork.</p>
+          <p className="footer-tagline">
+            Call or text <a href="tel:+12515545575">251-554-5575</a>
+          </p>
         </div>
+        <nav className="footer-cols" aria-label="Footer">
+          <div className="footer-col">
+            <h3>Company</h3>
+            <a href="/#about">About</a>
+            <a href="/#process">Process</a>
+            <a href="/#contact">Contact</a>
+          </div>
+          <div className="footer-col">
+            <h3>Offerings</h3>
+            <Link href="/digital-employees">Digital Employees</Link>
+            <a href="/#services">Services</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#checklist">Free Checklist</a>
+          </div>
+          <div className="footer-col">
+            <h3>Legal</h3>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms of Service</Link>
+          </div>
+        </nav>
+      </div>
+      <div className="footer-bottom" style={{ textAlign: "center" }}>
         <p>
           &copy; <Year />{" "}
           <Link href="/" aria-label="erase friction — home">
@@ -63,9 +88,6 @@ export function SiteFooter() {
             </span>
           </Link>
           . All rights reserved.
-        </p>
-        <p className="footer-phone">
-          Call or text <a href="tel:+12515545575">251-554-5575</a>
         </p>
       </div>
     </footer>
