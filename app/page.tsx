@@ -12,8 +12,9 @@ export const metadata: Metadata = {
   // this page, so overriding here would only risk them drifting apart.
 };
 
-// One entry per teammate. `digital: true` renders the badge — the humans and the
-// digital teammates share a grid, so the distinction has to be visible, not implied.
+// One entry per teammate. Everyone carries a badge: the digital teammates have
+// human personas by design, so who's who has to be stated outright rather than
+// left to the picture.
 const TEAM = [
   {
     name: "Brooks Conkle",
@@ -22,11 +23,10 @@ const TEAM = [
     href: "https://www.linkedin.com/in/brooksconkle/",
   },
   { name: "Tosin Alli", title: "Engineering & AI", img: "/Tosin.webp" },
-  // Kea is plainly a robot, so the AI-portrait note the human personas need
-  // would just be noise here.
-  { name: "Kea", title: "Always on. Never calls in sick.", img: "/Kea.webp", digital: true, alt: "Kea, a robot illustration" },
+  { name: "Kea", title: "Always on. Never calls in sick.", img: "/de-kea.webp", digital: true },
   { name: "Avery", title: "Operations & Admin", img: "/de-avery.webp", digital: true },
   { name: "Jordan", title: "Sales Development", img: "/de-jordan.webp", digital: true },
+  { name: "Jenn Sanders", title: "Social Media", img: "/de-jenn.webp", digital: true },
 ];
 
 const schema = {
@@ -230,7 +230,7 @@ export default function Home() {
                   const photo = (
                     <img
                       src={m.img}
-                      alt={m.alt ?? (m.digital ? `${m.name} — digital teammate (AI-generated portrait)` : m.name)}
+                      alt={m.digital ? `${m.name} — digital teammate (AI-generated portrait)` : m.name}
                       className="team-photo"
                       width={110}
                       height={110}
@@ -247,7 +247,9 @@ export default function Home() {
                         photo
                       )}
                       <div className="team-member-name">{m.name}</div>
-                      {m.digital && <span className="team-badge">Digital</span>}
+                      <span className={`team-badge${m.digital ? "" : " team-badge-human"}`}>
+                        {m.digital ? "100% digital" : "100% human"}
+                      </span>
                       <div className="team-member-title">{m.title}</div>
                     </div>
                   );

@@ -1914,9 +1914,9 @@ a {
   border-bottom-color: var(--color-accent-light);
 }
 
-/* Marks a digital teammate in the team grid. Same language as the badges on
-   /digital-employees, scaled down — the humans and the digital teammates sit
-   side by side here, so the difference has to be stated, not hinted at. */
+/* Every teammate is badged. The digital ones have human personas by design, so
+   the label does the work the photo can't — and badging the humans too makes
+   the pair read as a deliberate joke rather than a disclaimer. */
 .team-badge {
   display: inline-block;
   background: var(--color-accent-tint);
@@ -1930,4 +1930,12 @@ a {
   border-radius: var(--radius-pill);
   /* Pulls up against the name; the flex gap alone leaves it floating. */
   margin-top: -0.35rem;
+}
+
+/* Humans get a neutral badge so the two kinds separate at a glance rather than
+   needing to be read. */
+.team-badge-human {
+  background: #f1f2f4;
+  border-color: var(--color-border);
+  color: var(--color-muted);
 }
