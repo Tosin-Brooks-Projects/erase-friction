@@ -43,6 +43,7 @@ This file gives Claude Code full context on how this project should be built, ma
 │   ├── terms/page.tsx         # terms of service
 │   ├── thank-you/page.tsx     # post-signup: PDF cover + view/download (noindex)
 │   ├── digital-employees/page.tsx   # sales page: hire a digital teammate
+│   ├── work/page.tsx          # portfolio: client websites + our own tools
 │   └── api/lead/route.ts      # all forms: validate → Sheet → email
 ├── components/
 │   ├── SiteChrome.tsx         # header, footer, wordmark
@@ -255,6 +256,7 @@ N/A — no backend API. All form handling is via Netlify Forms.
 | 2026-07-24 | Switched checklist delivery from `MailApp` to **Resend** (supersedes the row above) | MailApp could only send from the personal Gmail, clashing with the brooks@erasefriction.com-everywhere rule and risking the Promotions tab. Resend sends domain-authenticated (SPF/DKIM) from brooks@erasefriction.com, attaches the PDF, and is the standard choice on Vercel — the coming Next.js rebuild reuses the same API. Secrets (`SHARED_SECRET`, `RESEND_API_KEY`) moved to Script Properties so re-pasting the script can't wipe them. |
 | 2026-07-24 | Thank-you page shows the PDF (cover + view/download) instead of "check your inbox" only | Instant payoff converts better; the email (with attachment) remains the keepable copy. Cover preview instead of an iframe because our own X-Frame-Options/frame-ancestors headers block framing the PDF, and inline PDF frames are unreliable on mobile. |
 | 2026-07-24 | **Migrated to Next.js on Vercel** (supersedes the static-HTML decision) | The owner runs Next/Vercel/Sheets pipelines routinely but had zero reps with Apps Script, whose save-vs-deploy model cost a full debugging day. `/api/lead` replaces Netlify Forms + webhook + Apps Script: secrets in env vars, IPs visible for spam defense, no 100/mo cap. Resend, the Sheet, GA4 and all URLs carry over unchanged. See MIGRATION.md for the cutover checklist. |
+| 2026-08-14 | Moved the portfolio off the homepage to `/work` and added client websites | The homepage was carrying eight sections; the tools list was buried at the bottom where it got no traffic. A dedicated page gives the portfolio room to grow and a URL to send people to. Websites are now shown as a service in their own right, with the "modern tools mean more flexibility" argument made concrete by the CPA directory's data-generated pages. |
 | 2026-08-13 | Added `/digital-employees` sales page (persona faces from thispersondoesnotexist + explicit "100% digital" badge) | Productizes the agency as hireable digital teammates. Photoreal personas build the bond that makes teams actually delegate to them; the badge + joke bios keep the disclosure unmissable — human feel, zero deception. New `hire` form routes through the same `/api/lead` pipeline; Sheet tabs now auto-create. |
 
 ---
