@@ -21,6 +21,7 @@ const SITES = [
     kind: "Exterior cleaning, Mobile Bay",
     desc: "Eight services across both sides of the bay, each with its own page, plus a before-and-after gallery and a quote form that reaches the owner's phone directly.",
     note: "Adding a service or a new city is an edit, not a rebuild.",
+    img: "/great-white.webp",
     url: "https://www.greatwhitepressurewashing.com/",
     host: "greatwhitepressurewashing.com",
   },
@@ -29,6 +30,7 @@ const SITES = [
     kind: "Independent insurance, Gulf Coast",
     desc: "Six lines of coverage, team bios, and 190+ five-star reviews placed where they actually change minds — all feeding one quote form.",
     note: "A second-generation agency that reads as trustworthy before you call.",
+    img: "/collins-agency.webp",
     url: "https://collins-insurance.com/",
     host: "collins-insurance.com",
   },
@@ -37,13 +39,17 @@ const SITES = [
     kind: "Statewide directory & matching service",
     desc: "7,139 licensed CPAs and 1,086 firms across 334 Alabama cities, with license lookup and a free matching service.",
     note: "Every city and firm page is generated from data — thousands of pages nobody hand-built.",
+    img: "/alabama-cpas.webp",
     url: "https://www.cpasinalabama.com/",
     host: "cpasinalabama.com",
   },
 ];
 
-// Internal builds we've opened up to the public.
-const TOOLS = [
+// Internal builds we've opened up to the public. `img` is optional — the cards
+// render fine without a screenshot, so a new tool can go up before one exists.
+type Tool = { name: string; tagline: string; desc: string; url: string; host: string; img?: string };
+
+const TOOLS: Tool[] = [
   {
     name: "Helpful Analytics",
     tagline: "Simple GA4 reporting for marketing agencies",
@@ -62,6 +68,7 @@ const TOOLS = [
     name: "Email of Introduction",
     tagline: "Make the intro without writing it",
     desc: "Point it at two LinkedIn profiles. It finds the common ground and drafts three intro emails you can send as-is. Free.",
+    img: "/email-of-introduction.webp",
     url: "https://www.emailofintroduction.com/",
     host: "emailofintroduction.com",
   },
@@ -69,6 +76,7 @@ const TOOLS = [
     name: "Easy Voice Recorder",
     tagline: "Record a voice message, share a link",
     desc: "Hit record, get a link. No account, no app install, works on any device. Free.",
+    img: "/easy-voice-recorder.webp",
     url: "https://www.easyvoicerecorderapp.com/",
     host: "easyvoicerecorderapp.com",
   },
@@ -170,14 +178,24 @@ export default function Work() {
             <div className="work-grid">
               {SITES.map((site) => (
                 <a className="work-card" key={site.url} href={site.url} target="_blank" rel="noopener">
-                  <div className="work-kind">{site.kind}</div>
-                  <div className="work-name">{site.name}</div>
-                  <p className="work-desc">{site.desc}</p>
-                  <p className="work-note">{site.note}</p>
-                  <span className="work-visit">
-                    {site.host} &rarr;
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </span>
+                  <img
+                    className="card-shot"
+                    src={site.img}
+                    alt={`Screenshot: ${site.name} homepage`}
+                    width={800}
+                    height={420}
+                    loading="lazy"
+                  />
+                  <div className="card-body">
+                    <div className="work-kind">{site.kind}</div>
+                    <div className="work-name">{site.name}</div>
+                    <p className="work-desc">{site.desc}</p>
+                    <p className="work-note">{site.note}</p>
+                    <span className="work-visit">
+                      {site.host} &rarr;
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </span>
+                  </div>
                 </a>
               ))}
             </div>
@@ -208,13 +226,25 @@ export default function Work() {
             <div className="tools-grid">
               {TOOLS.map((tool) => (
                 <a className="tool-card" key={tool.url} href={tool.url} target="_blank" rel="noopener">
-                  <div className="tool-name">{tool.name}</div>
-                  <div className="tool-tagline">{tool.tagline}</div>
-                  <p className="tool-desc">{tool.desc}</p>
-                  <span className="tool-visit">
-                    {tool.host} &rarr;
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </span>
+                  {tool.img && (
+                    <img
+                      className="card-shot"
+                      src={tool.img}
+                      alt={`Screenshot: ${tool.name}`}
+                      width={800}
+                      height={420}
+                      loading="lazy"
+                    />
+                  )}
+                  <div className="card-body">
+                    <div className="tool-name">{tool.name}</div>
+                    <div className="tool-tagline">{tool.tagline}</div>
+                    <p className="tool-desc">{tool.desc}</p>
+                    <span className="tool-visit">
+                      {tool.host} &rarr;
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </span>
+                  </div>
                 </a>
               ))}
             </div>
