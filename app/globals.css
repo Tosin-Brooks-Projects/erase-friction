@@ -1872,3 +1872,16 @@ a {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Automations list: same ruled treatment as .unlocks, but standing alone as
+   its own section rather than nested under the websites cards. */
+.automations-grid {
+  margin-top: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .automations-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+  }
+}

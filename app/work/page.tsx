@@ -58,6 +58,20 @@ const TOOLS = [
     url: "https://trackitandsave.com/",
     host: "trackitandsave.com",
   },
+  {
+    name: "Email of Introduction",
+    tagline: "Make the intro without writing it",
+    desc: "Point it at two LinkedIn profiles. It finds the common ground and drafts three intro emails you can send as-is. Free.",
+    url: "https://www.emailofintroduction.com/",
+    host: "emailofintroduction.com",
+  },
+  {
+    name: "Easy Voice Recorder",
+    tagline: "Record a voice message, share a link",
+    desc: "Hit record, get a link. No account, no app install, works on any device. Free.",
+    url: "https://www.easyvoicerecorderapp.com/",
+    host: "easyvoicerecorderapp.com",
+  },
 ];
 
 // The flexibility argument, made concrete. Every claim is backed by something
@@ -78,6 +92,36 @@ const UNLOCKS = [
   {
     title: "Marketing tools on your own domain",
     body: "Calculators, lookups, quizzes — the pages people bookmark and link to. We've built dozens. One on your site turns a brochure into a reason to come back.",
+  },
+];
+
+// Automations running in our own business. Deliberately outcome-first: what it
+// does for us, not which tools are wired together. These are examples of what's
+// possible, not a menu — client builds start from their workflow, not ours.
+const AUTOMATIONS = [
+  {
+    title: "A link in Slack becomes a draft article",
+    body: "Someone drops a URL in a channel. An AI teammate reads it, researches around it, writes our own version, and leaves it in WordPress as a draft to review.",
+  },
+  {
+    title: "A voice memo becomes a published post",
+    body: "Record a thought while walking. It gets transcribed and posted to LinkedIn and Facebook without anyone opening a laptop.",
+  },
+  {
+    title: "An assistant we message like a coworker",
+    body: "We chat with our agent, Hermes, from Telegram or Slack — ask a question, hand off a task, from anywhere.",
+  },
+  {
+    title: "A CRM that keeps itself current",
+    body: "Contacts flow into a master sheet and update themselves. Every Monday a report arrives with who needs following up. We update our CRM by chatting with Claude instead of opening it.",
+  },
+  {
+    title: "Search data, summarized twice a month",
+    body: "An automated Search Console report lands in the inbox with what changed and what it means. No dashboard visit required.",
+  },
+  {
+    title: "An inbox that files itself",
+    body: "An eight-label system sorts mail automatically, and a weekly sweep pulls anything important out of spam before clearing the rest.",
   },
 ];
 
@@ -159,7 +203,7 @@ export default function Work() {
           <div className="container">
             <h2 className="section-heading">Tools we&rsquo;ve built</h2>
             <p className="section-sub">
-              We build for ourselves first. When something works, we open it up to everyone.
+              We build for ourselves first. When something turns out useful, we open it up to everyone.
             </p>
             <div className="tools-grid">
               {TOOLS.map((tool) => (
@@ -177,14 +221,32 @@ export default function Work() {
           </div>
         </section>
 
-        <section className="work-section" id="more">
+        <section className="work-section" id="automations">
+          <div className="container">
+            <h2 className="section-heading">Automations we run ourselves</h2>
+            <p className="section-sub">
+              These run in our own business every day. They&rsquo;re here to show what&rsquo;s possible &mdash; not as a
+              menu. What we build for a client starts from their tools and their workflow, so it rarely looks like ours.
+            </p>
+            <div className="unlocks-grid automations-grid">
+              {AUTOMATIONS.map((a) => (
+                <div className="unlock" key={a.title}>
+                  <h3 className="unlock-title">{a.title}</h3>
+                  <p className="unlock-body">{a.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="work-section work-section-alt" id="more">
           <div className="container">
             <div className="work-closing">
-              <h2 className="section-heading">Not everything we build has a URL.</h2>
+              <h2 className="section-heading">Yours won&rsquo;t look like ours.</h2>
               <p className="section-sub">
-                Most of our work runs quietly inside other companies — the automations, internal tools, and digital
-                employees that move data, answer customers, and process documents while nobody watches. Those we
-                can&rsquo;t link to, but we can talk about them.
+                The best build starts from the specific thing eating your team&rsquo;s week &mdash; the handoff nobody
+                likes, the report someone rebuilds every Monday, the questions answered over and over. Tell us what
+                that is.
               </p>
               <div className="work-closing-actions">
                 <Link href="/#contact" className="btn btn-primary btn-lg">
