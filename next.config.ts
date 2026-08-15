@@ -42,8 +42,13 @@ const nextConfig: NextConfig = {
         headers: [{ key: "X-Robots-Tag", value: "noindex" }],
       },
       {
+        // These filenames aren't content-hashed, so a year-long immutable cache
+        // means replacing a photo never reaches anyone who already loaded it —
+        // it silently served a stale headshot for a full deploy cycle. Short
+        // freshness plus stale-while-revalidate keeps it fast and lets updates
+        // land. Rename the file too when a change has to be seen immediately.
         source: "/:file*(webp|svg|png|jpg)",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000" }],
+        headers: [{ key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=604800" }],
       },
     ];
   },

@@ -19,10 +19,10 @@ const TEAM = [
   {
     name: "Brooks Conkle",
     title: "Operations & Strategy",
-    img: "/Brooks.webp",
+    img: "/brooks.webp",
     href: "https://www.linkedin.com/in/brooksconkle/",
   },
-  { name: "Tosin Alli", title: "Engineering & AI", img: "/Tosin.webp" },
+  { name: "Tosin Alli", title: "Engineering & AI", img: "/tosin.webp" },
   { name: "Riley", title: "Marketing", img: "/de-riley.webp", digital: true },
   { name: "Avery", title: "Operations & Admin", img: "/de-avery.webp", digital: true },
   { name: "Jordan", title: "Sales Development", img: "/de-jordan.webp", digital: true },
