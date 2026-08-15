@@ -23,7 +23,7 @@ const TEAM = [
     href: "https://www.linkedin.com/in/brooksconkle/",
   },
   { name: "Tosin Alli", title: "Engineering & AI", img: "/Tosin.webp" },
-  { name: "Kea", title: "Always on. Never calls in sick.", img: "/de-kea.webp", digital: true },
+  { name: "Riley", title: "Marketing", img: "/de-riley.webp", digital: true },
   { name: "Avery", title: "Operations & Admin", img: "/de-avery.webp", digital: true },
   { name: "Jordan", title: "Sales Development", img: "/de-jordan.webp", digital: true },
   { name: "Jenn Sanders", title: "Social Media", img: "/de-jenn.webp", digital: true },
