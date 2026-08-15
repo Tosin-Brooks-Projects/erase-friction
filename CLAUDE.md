@@ -59,13 +59,19 @@ This file gives Claude Code full context on how this project should be built, ma
 ├── scripts/                   # RETIRED Apps Script pipeline, kept as reference
 ├── next.config.ts             # security headers (CSP, PDF noindex, caching)
 ├── MIGRATION.md               # what moved, what died, cutover checklist
-├── Brooks.png / Tosin.png / Kea.png   # 800px photo sources (not served)
+├── screenshots/               # full-size source captures for the /work cards
+├── Brooks.png / Tosin.png     # 800px photo sources for the two humans (not served)
+├── Kea.png                    # RETIRED robot render — Kea now has a persona face
 ├── logo*.png / logo*.svg      # brand assets (not served)
 └── CLAUDE.md
 ```
 
-The three `.png` team photos are **sources, not assets** — pages reference the
+`Brooks.png` / `Tosin.png` are **sources, not assets** — pages reference the
 `.webp` versions in `public/`. Re-export at 220×220 if a photo changes.
+
+The digital teammates (`public/de-*.webp`) are AI-generated persona portraits at
+440×440. Every one is badged **100% digital** on the page and discloses itself in
+alt text — if a new teammate is added, that badge is not optional.
 
 ---
 
