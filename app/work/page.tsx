@@ -60,6 +60,27 @@ const TOOLS = [
   },
 ];
 
+// The flexibility argument, made concrete. Every claim is backed by something
+// we've actually shipped — abstract "modern tools" talk convinces nobody.
+const UNLOCKS = [
+  {
+    title: "Pages that build themselves",
+    body: "The Alabama CPA Directory has a page for every one of 7,139 CPAs and 334 cities. Nobody typed those. Point the site at a data source and the pages appear — each one a new door in from search.",
+  },
+  {
+    title: "Forms that do more than email you",
+    body: "A template form sends a notification. A built form can write to your CRM, alert the team, tag the lead, and start the follow-up before you've finished reading it. The form on this site does exactly that.",
+  },
+  {
+    title: "Reporting you'll actually open",
+    body: "Measure what matters to your business instead of what a plugin decided to track. We got tired enough of digging through GA4 that we built our own reporting tool for it.",
+  },
+  {
+    title: "Marketing tools on your own domain",
+    body: "Calculators, lookups, quizzes — the pages people bookmark and link to. We've built dozens. One on your site turns a brochure into a reason to come back.",
+  },
+];
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
@@ -99,9 +120,8 @@ export default function Work() {
           <div className="container">
             <h2 className="section-heading">Websites</h2>
             <p className="section-sub">
-              Most small-business sites are stuck inside a template, where every change is a support ticket. Built on
-              modern tools, a site bends to your marketing instead: new landing pages in an afternoon, offers you can
-              test, and pages that build themselves from your data.
+              A template site is a brochure. A coded site is something you can build on &mdash; and that difference
+              shows up every time you want to try something.
             </p>
             <div className="work-grid">
               {SITES.map((site) => (
@@ -117,6 +137,18 @@ export default function Work() {
                 </a>
               ))}
             </div>
+            <div className="unlocks">
+              <h3 className="unlocks-heading">What that actually buys you</h3>
+              <div className="unlocks-grid">
+                {UNLOCKS.map((u) => (
+                  <div className="unlock" key={u.title}>
+                    <h4 className="unlock-title">{u.title}</h4>
+                    <p className="unlock-body">{u.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <p className="work-cta-line">
               Thinking about a rebuild? <Link href="/#contact">Tell us what your site can&rsquo;t do &rarr;</Link>
             </p>

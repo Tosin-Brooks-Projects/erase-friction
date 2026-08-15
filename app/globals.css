@@ -1824,3 +1824,51 @@ a {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* "What that actually buys you" — the flexibility argument, made concrete. */
+.unlocks {
+  margin-top: 3.5rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.unlocks-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.unlocks-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Teal rule instead of a card: these are supporting points, and boxing them
+   would compete with the project cards directly above. */
+.unlock {
+  padding-left: 1rem;
+  border-left: 3px solid var(--color-accent-light);
+}
+
+.unlock-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.unlock-body {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .unlocks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
