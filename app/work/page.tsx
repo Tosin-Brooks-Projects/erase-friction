@@ -19,7 +19,7 @@ const SITES = [
   {
     name: "Great White Pressure Washing",
     kind: "Exterior cleaning, Mobile Bay",
-    desc: "Eight services across both sides of the bay, each with its own page, plus a before-and-after gallery and a quote form that reaches the owner's phone directly.",
+    desc: "Eight services, each with its own page, a before-and-after gallery, and a quote form that reaches the owner's phone.",
     note: "Adding a service or a new city is an edit, not a rebuild.",
     img: "/great-white.webp",
     url: "https://www.greatwhitepressurewashing.com/",
@@ -28,8 +28,8 @@ const SITES = [
   {
     name: "The Collins Agency",
     kind: "Independent insurance, Gulf Coast",
-    desc: "Six lines of coverage, team bios, and 190+ five-star reviews placed where they actually change minds — all feeding one quote form.",
-    note: "A second-generation agency that reads as trustworthy before you call.",
+    desc: "Six lines of coverage, team bios, and 190+ five-star reviews — all feeding one quote form.",
+    note: "Reads as trustworthy before you pick up the phone.",
     img: "/collins-agency.webp",
     url: "https://collins-insurance.com/",
     host: "collins-insurance.com",
@@ -38,7 +38,7 @@ const SITES = [
     name: "Alabama CPA Directory",
     kind: "Statewide directory & matching service",
     desc: "7,139 licensed CPAs and 1,086 firms across 334 Alabama cities, with license lookup and a free matching service.",
-    note: "Every city and firm page is generated from data — thousands of pages nobody hand-built.",
+    note: "Thousands of pages, generated from data. Nobody typed them.",
     img: "/alabama-cpas.webp",
     url: "https://www.cpasinalabama.com/",
     host: "cpasinalabama.com",
@@ -54,6 +54,7 @@ const TOOLS: Tool[] = [
     name: "Helpful Analytics",
     tagline: "Simple GA4 reporting for marketing agencies",
     desc: "Turns Google Analytics 4 into client-ready reporting, without the digging.",
+    img: "/helpful-analytics.webp",
     url: "https://helpfulanalytics.com/",
     host: "helpfulanalytics.com",
   },
@@ -61,13 +62,14 @@ const TOOLS: Tool[] = [
     name: "Track it and Save",
     tagline: "Subscription management & expense tracking",
     desc: "Every recurring charge in one place — including the ones you forgot you were paying for.",
+    img: "/track-it-and-save.webp",
     url: "https://trackitandsave.com/",
     host: "trackitandsave.com",
   },
   {
     name: "Email of Introduction",
     tagline: "Make the intro without writing it",
-    desc: "Point it at two LinkedIn profiles. It finds the common ground and drafts three intro emails you can send as-is. Free.",
+    desc: "Point it at two LinkedIn profiles. Get three intro emails you can send as-is. Free.",
     img: "/email-of-introduction.webp",
     url: "https://www.emailofintroduction.com/",
     host: "emailofintroduction.com",
@@ -87,19 +89,19 @@ const TOOLS: Tool[] = [
 const UNLOCKS = [
   {
     title: "Pages that build themselves",
-    body: "The Alabama CPA Directory has a page for every one of 7,139 CPAs and 334 cities. Nobody typed those. Point the site at a data source and the pages appear — each one a new door in from search.",
+    body: "Point the site at a data source and the pages appear — each one a new door in from search.",
   },
   {
     title: "Forms that do more than email you",
-    body: "A template form sends a notification. A built form can write to your CRM, alert the team, tag the lead, and start the follow-up before you've finished reading it. The form on this site does exactly that.",
+    body: "A built form can write to your CRM, alert the team, tag the lead, and start the follow-up before you've read it. This site's form does.",
   },
   {
     title: "Reporting you'll actually open",
-    body: "Measure what matters to your business instead of what a plugin decided to track. We got tired enough of digging through GA4 that we built our own reporting tool for it.",
+    body: "Measure what matters to your business, not what a plugin decided to track. We got tired enough of GA4 that we built our own.",
   },
   {
     title: "Marketing tools on your own domain",
-    body: "Calculators, lookups, quizzes — the pages people bookmark and link to. We've built dozens. One on your site turns a brochure into a reason to come back.",
+    body: "Calculators, lookups, quizzes — the pages people bookmark and link to. One turns a brochure into a reason to come back.",
   },
 ];
 
@@ -109,27 +111,27 @@ const UNLOCKS = [
 const AUTOMATIONS = [
   {
     title: "A link in Slack becomes a draft article",
-    body: "Someone drops a URL in a channel. An AI teammate reads it, researches around it, writes our own version, and leaves it in WordPress as a draft to review.",
+    body: "Drop a URL in a channel. It comes back researched, written up, and waiting in WordPress as a draft.",
   },
   {
     title: "A voice memo becomes a published post",
-    body: "Record a thought while walking. It gets transcribed and posted to LinkedIn and Facebook without anyone opening a laptop.",
+    body: "Record a thought while walking. It's transcribed and posted to LinkedIn and Facebook before you're back.",
   },
   {
     title: "An assistant we message like a coworker",
-    body: "We chat with our agent, Hermes, from Telegram or Slack — ask a question, hand off a task, from anywhere.",
+    body: "We message Hermes from Telegram or Slack — ask a question, hand off a task, from anywhere.",
   },
   {
     title: "A CRM that keeps itself current",
-    body: "Contacts flow into a master sheet and update themselves. Every Monday a report arrives with who needs following up. We update our CRM by chatting with Claude instead of opening it.",
+    body: "Contacts update themselves, and Monday brings a report of who to follow up with. We update the CRM by chatting with Claude instead of opening it.",
   },
   {
     title: "Search data, summarized twice a month",
-    body: "An automated Search Console report lands in the inbox with what changed and what it means. No dashboard visit required.",
+    body: "A report lands in the inbox with what changed and what it means. No dashboard visit.",
   },
   {
     title: "An inbox that files itself",
-    body: "An eight-label system sorts mail automatically, and a weekly sweep pulls anything important out of spam before clearing the rest.",
+    body: "Eight labels sort mail automatically. A weekly sweep rescues anything important from spam, then clears the rest.",
   },
 ];
 
@@ -164,7 +166,7 @@ export default function Work() {
           <div className="hero-blob" aria-hidden="true"></div>
           <div className="container">
             <h1 className="hero-headline">Work we&rsquo;ve shipped.</h1>
-            <p className="hero-sub">Websites, tools, and the automations behind them.</p>
+            <p className="hero-sub">Client sites, our own tools, and the automations we run internally.</p>
           </div>
         </section>
 
@@ -172,8 +174,7 @@ export default function Work() {
           <div className="container">
             <h2 className="section-heading">Websites</h2>
             <p className="section-sub">
-              A template site is a brochure. A coded site is something you can build on &mdash; and that difference
-              shows up every time you want to try something.
+A template site is a brochure. A coded site is something you can build on.
             </p>
             <div className="work-grid">
               {SITES.map((site) => (
@@ -221,7 +222,7 @@ export default function Work() {
           <div className="container">
             <h2 className="section-heading">Tools we&rsquo;ve built</h2>
             <p className="section-sub">
-              We build for ourselves first. When something turns out useful, we open it up to everyone.
+              We build for ourselves first. When something turns out useful, we share it.
             </p>
             <div className="tools-grid">
               {TOOLS.map((tool) => (
@@ -255,8 +256,7 @@ export default function Work() {
           <div className="container">
             <h2 className="section-heading">Automations we run ourselves</h2>
             <p className="section-sub">
-              These run in our own business every day. They&rsquo;re here to show what&rsquo;s possible &mdash; not as a
-              menu. What we build for a client starts from their tools and their workflow, so it rarely looks like ours.
+These run in our own business every day &mdash; a sense of what&rsquo;s possible, not a menu.
             </p>
             <div className="unlocks-grid automations-grid">
               {AUTOMATIONS.map((a) => (
@@ -274,9 +274,7 @@ export default function Work() {
             <div className="work-closing">
               <h2 className="section-heading">Yours won&rsquo;t look like ours.</h2>
               <p className="section-sub">
-                The best build starts from the specific thing eating your team&rsquo;s week &mdash; the handoff nobody
-                likes, the report someone rebuilds every Monday, the questions answered over and over. Tell us what
-                that is.
+Every build starts from the thing eating your team&rsquo;s week &mdash; the handoff nobody likes, the report rebuilt every Monday, the same questions answered again. Tell us yours.
               </p>
               <div className="work-closing-actions">
                 <Link href="/#contact" className="btn btn-primary btn-lg">
