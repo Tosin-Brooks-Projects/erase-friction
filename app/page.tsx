@@ -12,6 +12,23 @@ export const metadata: Metadata = {
   // this page, so overriding here would only risk them drifting apart.
 };
 
+// One entry per teammate. `digital: true` renders the badge — the humans and the
+// digital teammates share a grid, so the distinction has to be visible, not implied.
+const TEAM = [
+  {
+    name: "Brooks Conkle",
+    title: "Operations & Strategy",
+    img: "/Brooks.webp",
+    href: "https://www.linkedin.com/in/brooksconkle/",
+  },
+  { name: "Tosin Alli", title: "Engineering & AI", img: "/Tosin.webp" },
+  // Kea is plainly a robot, so the AI-portrait note the human personas need
+  // would just be noise here.
+  { name: "Kea", title: "Always on. Never calls in sick.", img: "/Kea.webp", digital: true, alt: "Kea, a robot illustration" },
+  { name: "Avery", title: "Operations & Admin", img: "/de-avery.webp", digital: true },
+  { name: "Jordan", title: "Sales Development", img: "/de-jordan.webp", digital: true },
+];
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -209,28 +226,32 @@ export default function Home() {
                 executing around the clock while your team focuses on what actually requires a human.
               </p>
               <div className="team-grid">
-                <div className="team-member">
-                  <a
-                    href="https://www.linkedin.com/in/brooksconkle/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Brooks Conkle on LinkedIn"
-                  >
-                    <img src="/Brooks.webp" alt="Brooks Conkle" className="team-photo" width={110} height={110} loading="lazy" />
-                  </a>
-                  <div className="team-member-name">Brooks Conkle</div>
-                  <div className="team-member-title">Operations &amp; Strategy</div>
-                </div>
-                <div className="team-member">
-                  <img src="/Tosin.webp" alt="Tosin Alli" className="team-photo" width={110} height={110} loading="lazy" />
-                  <div className="team-member-name">Tosin Alli</div>
-                  <div className="team-member-title">Engineering &amp; AI</div>
-                </div>
-                <div className="team-member">
-                  <img src="/Kea.webp" alt="Kea" className="team-photo" width={110} height={110} loading="lazy" />
-                  <div className="team-member-name">Kea</div>
-                  <div className="team-member-title">He&rsquo;s always on. Never calls in sick.</div>
-                </div>
+                {TEAM.map((m) => {
+                  const photo = (
+                    <img
+                      src={m.img}
+                      alt={m.alt ?? (m.digital ? `${m.name} — digital teammate (AI-generated portrait)` : m.name)}
+                      className="team-photo"
+                      width={110}
+                      height={110}
+                      loading="lazy"
+                    />
+                  );
+                  return (
+                    <div className="team-member" key={m.name}>
+                      {m.href ? (
+                        <a href={m.href} target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`}>
+                          {photo}
+                        </a>
+                      ) : (
+                        photo
+                      )}
+                      <div className="team-member-name">{m.name}</div>
+                      {m.digital && <span className="team-badge">Digital</span>}
+                      <div className="team-member-title">{m.title}</div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

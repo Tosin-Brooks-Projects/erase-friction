@@ -1913,3 +1913,21 @@ a {
 .tool-card:hover .card-shot {
   border-bottom-color: var(--color-accent-light);
 }
+
+/* Marks a digital teammate in the team grid. Same language as the badges on
+   /digital-employees, scaled down — the humans and the digital teammates sit
+   side by side here, so the difference has to be stated, not hinted at. */
+.team-badge {
+  display: inline-block;
+  background: var(--color-accent-tint);
+  border: 1px solid var(--color-accent-light);
+  color: var(--color-accent-deep);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-pill);
+  /* Pulls up against the name; the flex gap alone leaves it floating. */
+  margin-top: -0.35rem;
+}
