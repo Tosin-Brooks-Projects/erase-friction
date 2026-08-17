@@ -86,7 +86,8 @@ const TOOLS: Tool[] = [
 
 // The flexibility argument, made concrete. Every claim is backed by something
 // we've actually shipped — abstract "modern tools" talk convinces nobody.
-const UNLOCKS = [
+// `body` takes JSX so a claim can link to the proof.
+const UNLOCKS: { title: string; body: React.ReactNode }[] = [
   {
     title: "Pages that build themselves",
     body: "Point the site at a data source and the pages appear — each one a new door in from search.",
@@ -97,7 +98,16 @@ const UNLOCKS = [
   },
   {
     title: "Reporting you'll actually open",
-    body: "Measure what matters to your business, not what a plugin decided to track. We got tired enough of GA4 that we built our own.",
+    body: (
+      <>
+        Measure what matters to your business, not what a plugin decided to track. We got tired enough of GA4 that we{" "}
+        <a href="https://helpfulanalytics.com/" target="_blank" rel="noopener">
+          built our own
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
+        .
+      </>
+    ),
   },
   {
     title: "Marketing tools on your own domain",

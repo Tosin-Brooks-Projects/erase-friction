@@ -1879,6 +1879,18 @@ a {
   line-height: 1.6;
 }
 
+/* Body text here is muted, so a link needs the accent to read as clickable. */
+.unlock-body a {
+  color: var(--color-accent-hover);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.unlock-body a:hover {
+  color: var(--color-accent-deep);
+}
+
 @media (min-width: 640px) {
   .unlocks-grid {
     grid-template-columns: repeat(2, 1fr);
