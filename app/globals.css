@@ -1693,6 +1693,18 @@ a {
   padding: 5rem 0 4rem;
 }
 
+/* .hero-sub reserves space for a CTA underneath it. This hero has none, so that
+   margin was just dead air above the first section. */
+.work-hero .hero-sub {
+  margin-bottom: 0;
+}
+
+@media (max-width: 639px) {
+  .work-hero {
+    padding: 3rem 0 2.5rem;
+  }
+}
+
 .work-section {
   padding: 5rem 0;
   background-color: var(--color-surface);
