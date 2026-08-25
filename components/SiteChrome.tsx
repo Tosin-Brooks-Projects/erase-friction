@@ -20,11 +20,16 @@ export function SiteHeader({ withNav = true }: { withNav?: boolean }) {
         </Link>
         {withNav && (
           <div className="nav-actions">
+            {/* Proof shouldn't take two clicks — /work stays in the menu for
+                small screens, but gets a direct link once there's room. */}
+            <Link href="/work" className="nav-link">
+              Our Work
+            </Link>
             <a href="/#contact" className="btn btn-primary btn-sm">
               {/* The full label doesn't fit next to the logo and menu button on
                   small phones; CSS swaps in the short one below ~480px. */}
-              <span className="cta-full">Tell us your bottleneck &rarr;</span>
-              <span className="cta-short">Your bottleneck &rarr;</span>
+              <span className="cta-full">Tell us what&rsquo;s stuck &rarr;</span>
+              <span className="cta-short">What&rsquo;s stuck &rarr;</span>
             </a>
             <NavMenu />
           </div>
@@ -42,7 +47,7 @@ export function SiteFooter() {
           <Link href="/" className="footer-logo" aria-label="erase friction — home">
             <Wordmark />
           </Link>
-          <p className="footer-tagline">Custom software, automation &amp; AI that erase the busywork.</p>
+          <p className="footer-tagline">Websites, software &amp; automation that erase the friction.</p>
           <p className="footer-tagline">
             Call or text <a href="tel:+12515545575">251-554-5575</a>
           </p>
