@@ -385,7 +385,27 @@ a {
 .problem-grid {
   display: grid;
   gap: 2rem;
+  margin-top: 1.25rem;
+}
+
+/* The two halves of friction: the hours it eats inside, the customers it loses
+   outside. The label is what stops the six items reading as a grab-bag. */
+.problem-group + .problem-group {
   margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.problem-group:first-child {
+  margin-top: 3rem;
+}
+
+.problem-group-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-hover);
 }
 
 .problem-item {
@@ -414,6 +434,21 @@ a {
 .services {
   padding: 5rem 0;
   background-color: var(--color-bg);
+}
+
+/* PROOF — the homepage had no evidence at all before this. */
+.proof {
+  padding: 5rem 0;
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.proof .service-card {
+  cursor: default;
+}
+
+.proof .work-note {
+  margin-bottom: 0;
 }
 
 /* PROCESS */
@@ -552,6 +587,19 @@ a {
   color: var(--color-muted);
 }
 
+/* Hidden on phones, where the hamburger already carries it. */
+.nav-link {
+  display: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+  padding: 0.5rem 0.25rem;
+}
+
+.nav-link:hover {
+  color: var(--color-accent-hover);
+}
+
 .section-heading {
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 700;
@@ -621,6 +669,31 @@ a {
 
 .service-card:hover .card-icon-wrap {
   background: var(--color-accent-tint);
+}
+
+/* Category above, outcome as the headline — a scanner reading only the bold
+   lines gets three outcomes; one reading only the labels gets three categories. */
+.card-cat {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  margin-bottom: 0.35rem;
+}
+
+.card-link {
+  margin-top: 0.9rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.card-link a {
+  color: var(--color-accent-hover);
+}
+
+.card-link a:hover {
+  color: var(--color-accent-deep);
 }
 
 .card-title {
@@ -1000,6 +1073,11 @@ a {
 
 /* DESKTOP */
 @media (min-width: 1024px) {
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
   .services-grid {
     grid-template-columns: repeat(3, 1fr);
   }
