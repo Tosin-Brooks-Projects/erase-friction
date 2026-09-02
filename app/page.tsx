@@ -271,6 +271,9 @@ export default function Home() {
                 </p>
               </div>
             </div>
+            <p className="work-cta-line">
+              <Link href="/services">See what we actually fix &rarr;</Link>
+            </p>
           </div>
         </section>
 

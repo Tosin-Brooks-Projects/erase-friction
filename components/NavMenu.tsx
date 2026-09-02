@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 const ITEMS = [
   { href: "/#checklist", label: "Free Checklist", pageLink: false },
+  { href: "/services", label: "Services", pageLink: true },
   { href: "/digital-employees", label: "Digital Employees", pageLink: true },
   { href: "/work", label: "Our Work", pageLink: true },
   { href: "/#about", label: "About", pageLink: false },

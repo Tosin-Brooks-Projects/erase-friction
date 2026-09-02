@@ -61,8 +61,8 @@ export function SiteFooter() {
           </div>
           <div className="footer-col">
             <h3>Offerings</h3>
+            <Link href="/services">Services</Link>
             <Link href="/digital-employees">Digital Employees</Link>
-            <a href="/#services">Services</a>
             <Link href="/work">Our Work</Link>
             <a href="/#checklist">Free Checklist</a>
           </div>
